@@ -115,6 +115,16 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
                         break;
                 }
             }
+
+            if (hand.isLeft()) {
+                parsedHands->leftHand->position_x = (int) (hand.palmPosition().x - hand.palmPosition().x);
+                parsedHands->leftHand->position_y = (int) (hand.palmPosition().y - hand.palmPosition().y);
+                parsedHands->leftHand->position_z = (int) (hand.palmPosition().z - hand.palmPosition().z);
+            } else if (hand.isRight()) {
+                parsedHands->rightHand->position_x = (int) (hand.palmPosition().x - hand.palmPosition().x);
+                parsedHands->rightHand->position_y = (int) (hand.palmPosition().y - hand.palmPosition().y);
+                parsedHands->rightHand->position_z = (int) (hand.palmPosition().z - hand.palmPosition().z);
+            }
         }
     } else {
         parsedHands = nullptr;

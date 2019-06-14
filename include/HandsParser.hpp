@@ -9,7 +9,6 @@
 #include "Leap.h"
 
 namespace gesture_parser {
-
     class HandsParser : private Leap::Listener {
     private:
         Leap::Controller *m_controller;

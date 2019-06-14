@@ -13,8 +13,11 @@ void onDisconnect() {
 }
 
 void onGesture(gesture_parser::ParsedHands *t_parsedHands) {
-    printf("Some hands!\n");
+    if (t_parsedHands->getDistance() > 0) {
+        printf("%f\n", t_parsedHands->getDistance());
+    }
 }
+
 int main(int argc, char **argv) {
     auto pHandParser = new gesture_parser::HandsParser();
 

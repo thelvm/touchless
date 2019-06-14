@@ -14,6 +14,16 @@ namespace gesture_parser {
         ParsedHand *rightHand;
 
         ParsedHands();
+
+        bool equals(const ParsedHands &other, double t_distanceTolerance ) const;
+
+        double getXDistance() const;
+
+        double getYDistance() const;
+
+        double getZDistance() const;
+
+        double getDistance() const;
     };
 }
 

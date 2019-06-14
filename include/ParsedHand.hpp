@@ -26,8 +26,16 @@ namespace gesture_parser {
         static double cleanRadian(double t_radian);
 
     public:
+
+        int position_x;
+        int position_y;
+        int position_z;
+
         ParsedHand();
 
+        bool operator==(const ParsedHand &rhs) const;
+
+        bool operator!=(const ParsedHand &rhs) const;
 
         bool isThumbExtended() const;
 

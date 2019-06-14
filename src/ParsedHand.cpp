@@ -12,7 +12,11 @@ gesture_parser::ParsedHand::ParsedHand() : m_thumb(),
                                            m_pinky(),
                                            m_roll(),
                                            m_pitch(),
-                                           m_yaw() {}
+                                           m_yaw(),
+                                           position_x(),
+                                           position_y(),
+                                           position_z()
+                                           {}
 
 int gesture_parser::ParsedHand::cleanDegree(double t_degree) {
     if (t_degree < 0) {
@@ -142,5 +146,22 @@ void gesture_parser::ParsedHand::setYawRadian(double t_radian) {
     t_radian = cleanRadian(t_radian);
     m_yaw = (int)(t_radian * (180.0/M_PI));
 }
+
+bool gesture_parser::ParsedHand::operator==(const gesture_parser::ParsedHand &rhs) const {
+    return m_thumb == rhs.m_thumb &&
+           m_index == rhs.m_index &&
+           m_midlle == rhs.m_midlle &&
+           m_ring == rhs.m_ring &&
+           m_pinky == rhs.m_pinky &&
+           m_roll == rhs.m_roll &&
+           m_pitch == rhs.m_pitch &&
+           m_yaw == rhs.m_yaw;
+}
+
+bool gesture_parser::ParsedHand::operator!=(const gesture_parser::ParsedHand &rhs) const {
+    return !(rhs == *this);
+}
+
+
 
 

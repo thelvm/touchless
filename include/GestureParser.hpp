@@ -24,7 +24,7 @@ private:
 
     /// Parses hands to detect gestures.
     /// If a gesture is detected, calls onGesture on the listener
-    void parseHands(const ParsedHands *t_parsedHands);
+    void parseHands(const Hands *t_parsedHands);
 
 public:
     GestureParser();
@@ -49,7 +49,7 @@ public:
 
     void onDisconnect() override;
 
-    void onHands(const ParsedHands *t_hands) override;
+    void onHands(const Hands *t_hands) override;
 };
 } // namespace gesture_parser
 

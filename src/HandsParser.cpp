@@ -19,10 +19,10 @@ void gesture_parser::HandsParser::onFrame(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
-        ParsedHands *parsedHands = parseFrame(t_controller.frame());
-        if (parsedHands != nullptr)
+        Hands *hands = parseFrame(t_controller.frame());
+        if (hands != nullptr)
         {
-            m_listener->onHands(parsedHands);
+            m_listener->onHands(hands);
         }
     }
 }
@@ -43,13 +43,13 @@ void gesture_parser::HandsParser::onDisconnect(const Leap::Controller &t_control
     }
 }
 
-gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame t_frame)
+gesture_parser::Hands *gesture_parser::HandsParser::parseFrame(Leap::Frame t_frame)
 {
-    ParsedHands *parsedHands;
+    Hands *hands;
 
     if (!t_frame.hands().isEmpty())
     {
-        parsedHands = new ParsedHands();
+        hands = new Hands();
         for (int i = 0; i < t_frame.hands().count(); i++)
         {
             Leap::Hand hand = t_frame.hands()[i];
@@ -57,38 +57,38 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
             // Identifying presence of hand
             if (hand.isLeft())
             {
-                parsedHands->leftHand = new ParsedHand();
+                hands->leftHand = new Hand();
             }
             if (hand.isRight())
             {
-                parsedHands->rightHand = new ParsedHand();
+                hands->rightHand = new Hand();
             }
 
             if (hand.isLeft())
             {
-                parsedHands->leftHand->setRollRadian(hand.palmNormal().roll());
+                hands->leftHand->setRollRadian(hand.palmNormal().roll());
             }
             else
             {
-                parsedHands->rightHand->setRollRadian(hand.palmNormal().roll());
+                hands->rightHand->setRollRadian(hand.palmNormal().roll());
             }
 
             if (hand.isLeft())
             {
-                parsedHands->leftHand->setPitchRadian(hand.direction().pitch());
+                hands->leftHand->setPitchRadian(hand.direction().pitch());
             }
             else
             {
-                parsedHands->rightHand->setPitchRadian(hand.direction().pitch());
+                hands->rightHand->setPitchRadian(hand.direction().pitch());
             }
 
             if (hand.isLeft())
             {
-                parsedHands->leftHand->setYawRadian(hand.direction().yaw());
+                hands->leftHand->setYawRadian(hand.direction().yaw());
             }
             else
             {
-                parsedHands->rightHand->setYawRadian(hand.direction().yaw());
+                hands->rightHand->setYawRadian(hand.direction().yaw());
             }
 
             for (int j = 0; j < hand.fingers().count(); j++)
@@ -100,51 +100,51 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
                 case Leap::Finger::TYPE_INDEX:
                     if (hand.isLeft())
                     {
-                        parsedHands->leftHand->setIndexExtended(finger.isExtended());
+                        hands->leftHand->setIndexExtended(finger.isExtended());
                     }
                     else
                     {
-                        parsedHands->rightHand->setIndexExtended(finger.isExtended());
+                        hands->rightHand->setIndexExtended(finger.isExtended());
                     }
                     break;
                 case Leap::Finger::TYPE_MIDDLE:
                     if (hand.isLeft())
                     {
-                        parsedHands->leftHand->setMiddleExtended(finger.isExtended());
+                        hands->leftHand->setMiddleExtended(finger.isExtended());
                     }
                     else
                     {
-                        parsedHands->rightHand->setMiddleExtended(finger.isExtended());
+                        hands->rightHand->setMiddleExtended(finger.isExtended());
                     }
                     break;
                 case Leap::Finger::TYPE_RING:
                     if (hand.isLeft())
                     {
-                        parsedHands->leftHand->setRingExtended(finger.isExtended());
+                        hands->leftHand->setRingExtended(finger.isExtended());
                     }
                     else
                     {
-                        parsedHands->rightHand->setRingExtended(finger.isExtended());
+                        hands->rightHand->setRingExtended(finger.isExtended());
                     }
                     break;
                 case Leap::Finger::TYPE_PINKY:
                     if (hand.isLeft())
                     {
-                        parsedHands->leftHand->setPinkyExtended(finger.isExtended());
+                        hands->leftHand->setPinkyExtended(finger.isExtended());
                     }
                     else
                     {
-                        parsedHands->rightHand->setPinkyExtended(finger.isExtended());
+                        hands->rightHand->setPinkyExtended(finger.isExtended());
                     }
                     break;
                 case Leap::Finger::TYPE_THUMB:
                     if (hand.isLeft())
                     {
-                        parsedHands->leftHand->setThumbExtended(finger.isExtended());
+                        hands->leftHand->setThumbExtended(finger.isExtended());
                     }
                     else
                     {
-                        parsedHands->rightHand->setThumbExtended(finger.isExtended());
+                        hands->rightHand->setThumbExtended(finger.isExtended());
                     }
                     break;
                 default:
@@ -154,27 +154,27 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
 
             if (hand.isLeft())
             {
-                parsedHands->leftHand->position_x = hand.palmPosition().x;
-                parsedHands->leftHand->position_y = hand.palmPosition().y;
-                parsedHands->leftHand->position_z = hand.palmPosition().z;
+                hands->leftHand->position_x = hand.palmPosition().x;
+                hands->leftHand->position_y = hand.palmPosition().y;
+                hands->leftHand->position_z = hand.palmPosition().z;
             }
             else if (hand.isRight())
             {
-                parsedHands->rightHand->position_x = hand.palmPosition().x;
-                parsedHands->rightHand->position_y = hand.palmPosition().y;
-                parsedHands->rightHand->position_z = hand.palmPosition().z;
+                hands->rightHand->position_x = hand.palmPosition().x;
+                hands->rightHand->position_y = hand.palmPosition().y;
+                hands->rightHand->position_z = hand.palmPosition().z;
             }
         }
     }
     else
     {
-        parsedHands = nullptr;
+        hands = nullptr;
     }
 
-    return parsedHands;
+    return hands;
 }
 
-gesture_parser::ParsedHands *gesture_parser::HandsParser::getHands()
+gesture_parser::Hands *gesture_parser::HandsParser::getHands()
 {
     return parseFrame(m_controller->frame());
 }

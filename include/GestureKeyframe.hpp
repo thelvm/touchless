@@ -5,7 +5,7 @@
 #ifndef GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
 #define GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
 
-#include "ParsedHands.hpp"
+#include "Hands.hpp"
 #include "json.hpp"
 
 namespace gesture_parser
@@ -13,7 +13,7 @@ namespace gesture_parser
 class GestureKeyframe
 {
 public:
-    ParsedHands hands;
+    Hands hands;
 
     GestureKeyframe();
 

@@ -32,6 +32,6 @@ void gesture_parser::GestureParser::onDisconnect()
 {
 }
 
-void gesture_parser::GestureParser::onHands(const gesture_parser::ParsedHands *t_hands)
+void gesture_parser::GestureParser::onHands(const gesture_parser::Hands *t_hands)
 {
 }

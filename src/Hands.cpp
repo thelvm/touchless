@@ -5,15 +5,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-#include "ParsedHands.hpp"
+#include "Hands.hpp"
 
-gesture_parser::ParsedHands::ParsedHands()
+gesture_parser::Hands::Hands()
 {
     leftHand = nullptr;
     rightHand = nullptr;
 }
 
-double gesture_parser::ParsedHands::getXDistance() const
+double gesture_parser::Hands::getXDistance() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -22,7 +22,7 @@ double gesture_parser::ParsedHands::getXDistance() const
     return -1;
 }
 
-double gesture_parser::ParsedHands::getYDistance() const
+double gesture_parser::Hands::getYDistance() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -31,7 +31,7 @@ double gesture_parser::ParsedHands::getYDistance() const
     return -1;
 }
 
-double gesture_parser::ParsedHands::getZDistance() const
+double gesture_parser::Hands::getZDistance() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -40,7 +40,7 @@ double gesture_parser::ParsedHands::getZDistance() const
     return -1;
 }
 
-double gesture_parser::ParsedHands::getDistance() const
+double gesture_parser::Hands::getDistance() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -51,7 +51,7 @@ double gesture_parser::ParsedHands::getDistance() const
     return -1;
 }
 
-bool gesture_parser::ParsedHands::equals(const gesture_parser::ParsedHands &other, double t_distanceTolerance) const
+bool gesture_parser::Hands::equals(const gesture_parser::Hands &other, double t_distanceTolerance) const
 {
     double distanceTolerance = t_distanceTolerance / 2;
     return leftHand == other.leftHand &&

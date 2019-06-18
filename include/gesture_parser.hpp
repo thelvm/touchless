@@ -5,8 +5,11 @@
 #ifndef GESTURE_PARSER_API_GESTURE_PARSER_HPP
 #define GESTURE_PARSER_API_GESTURE_PARSER_HPP
 
-#include "ParsedHand.hpp"
-#include "ParsedHands.hpp"
+#include "Hand.hpp"
+#include "Hands.hpp"
+#include "HandsParserListener.hpp"
 #include "HandsParser.hpp"
+#include "GestureParserListener.hpp"
+#include "GestureParser.hpp"
 
 #endif //GESTURE_PARSER_API_GESTURE_PARSER_HPP

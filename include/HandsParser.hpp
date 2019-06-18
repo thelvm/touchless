@@ -5,7 +5,7 @@
 #ifndef GESTURE_PARSER_API_HANDSPARSER_HPP
 #define GESTURE_PARSER_API_HANDSPARSER_HPP
 
-#include "ParsedHands.hpp"
+#include "Hands.hpp"
 #include "Gesture.hpp"
 #include "Leap.h"
 #include "HandsParserListener.hpp"
@@ -25,7 +25,7 @@ private:
 
     void onDisconnect(const Leap::Controller &t_controller) override;
 
-    ParsedHands *parseFrame(Leap::Frame t_frame);
+    Hands *parseFrame(Leap::Frame t_frame);
 
 public:
     HandsParser();
@@ -36,7 +36,7 @@ public:
 
     void stopParsing();
 
-    ParsedHands *getHands();
+    Hands *getHands();
 
     void addListener(HandsParserListener *t_listener);
 };

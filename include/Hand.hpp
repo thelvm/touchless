@@ -2,12 +2,12 @@
 // Created by lucas on 12/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_PARSEDHAND_HPP
-#define GESTURE_PARSER_API_PARSEDHAND_HPP
+#ifndef GESTURE_PARSER_API_HAND_HPP
+#define GESTURE_PARSER_API_HAND_HPP
 
 namespace gesture_parser
 {
-class ParsedHand
+class Hand
 {
 private:
     static constexpr int MAX_ANGLE = 359;
@@ -32,11 +32,11 @@ public:
     double position_y;
     double position_z;
 
-    ParsedHand();
+    Hand();
 
-    bool operator==(const ParsedHand &rhs) const;
+    bool operator==(const Hand &rhs) const;
 
-    bool operator!=(const ParsedHand &rhs) const;
+    bool operator!=(const Hand &rhs) const;
 
     bool isThumbExtended() const;
 
@@ -88,4 +88,4 @@ public:
 };
 } // namespace gesture_parser
 
-#endif //GESTURE_PARSER_API_PARSEDHAND_HPP
+#endif //GESTURE_PARSER_API_HAND_HPP

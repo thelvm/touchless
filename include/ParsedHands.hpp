@@ -7,24 +7,26 @@
 
 #include "ParsedHand.hpp"
 
-namespace gesture_parser {
-    class ParsedHands {
-    public:
-        ParsedHand *leftHand;
-        ParsedHand *rightHand;
+namespace gesture_parser
+{
+class ParsedHands
+{
+public:
+    ParsedHand *leftHand;
+    ParsedHand *rightHand;
 
-        ParsedHands();
+    ParsedHands();
 
-        bool equals(const ParsedHands &other, double t_distanceTolerance ) const;
+    bool equals(const ParsedHands &other, double t_distanceTolerance) const;
 
-        double getXDistance() const;
+    double getXDistance() const;
 
-        double getYDistance() const;
+    double getYDistance() const;
 
-        double getZDistance() const;
+    double getZDistance() const;
 
-        double getDistance() const;
-    };
-}
+    double getDistance() const;
+};
+} // namespace gesture_parser
 
 #endif //GESTURE_PARSER_API_PARSEDHANDS_HPP

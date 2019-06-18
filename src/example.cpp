@@ -4,30 +4,31 @@
 
 #include "gesture_parser.hpp"
 
-void onConnect() {
+void onConnect()
+{
     printf("Connected!\n");
 }
 
-void onDisconnect() {
+void onDisconnect()
+{
     printf("Disconnected!\n");
 }
 
-void onGesture(gesture_parser::ParsedHands *t_parsedHands) {
-    if (t_parsedHands->getDistance() > 0) {
-        printf("%f\n", t_parsedHands->getDistance());
-    }
+void onGesture(gesture_parser::Gesture *t_gesture)
+{
 }
 
-int main(int argc, char **argv) {
-    auto pHandParser = new gesture_parser::HandsParser();
+int main(int argc, char **argv)
+{
+    auto pHandsParser = new gesture_parser::HandsParser();
 
-    pHandParser->setOnConnectCallback(onConnect);
-    pHandParser->setOnDisconnectCallback(onDisconnect);
-    pHandParser->setOnGestureCallback(onGesture);
+    pHandsParser->setOnConnectCallback(onConnect);
+    pHandsParser->setOnDisconnectCallback(onDisconnect);
+    pHandsParser->setOnGestureCallback(onGesture);
 
-    pHandParser->startParsing();
+    pHandsParser->startParsing();
 
     std::cin.get();
 
-    pHandParser->stopParsing();
+    pHandsParser->stopParsing();
 }

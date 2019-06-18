@@ -6,14 +6,21 @@
 #define GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
 
 #include "ParsedHands.hpp"
+#include "json.hpp"
 
-namespace gesture_parser {
-    class GestureKeyframe {
-    public:
-        ParsedHands hands;
+namespace gesture_parser
+{
+class GestureKeyframe
+{
+public:
+    ParsedHands hands;
 
-        static double positionPrecision;
-    };
-}
+    GestureKeyframe();
+
+    explicit GestureKeyframe(const nlohmann::json &t_json);
+
+    static double positionPrecision;
+};
+} // namespace gesture_parser
 
 #endif //GESTURE_PARSER_API_GESTUREKEYFRAME_HPP

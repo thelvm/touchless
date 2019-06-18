@@ -8,19 +8,28 @@
 #include <vector>
 #include "GestureKeyframe.hpp"
 
-namespace gesture_parser {
-    class Gesture {
-    private:
-        std::vector<GestureKeyframe *> m_keyframes;
-    public:
-        void addKeyframe(GestureKeyframe *t_keyframe);
+namespace gesture_parser
+{
+class Gesture
+{
+private:
+    std::vector<GestureKeyframe *> m_keyframes;
 
-        void addKeyframe(GestureKeyframe *t_keyframe, unsigned int t_position);
+public:
+    char *name;
 
-        void removeKeyframe();
+    Gesture();
 
-        void removeKeyframe(unsigned int t_position);
-    };
-}
+    Gesture(const char *t_file_name);
+
+    void addKeyframe(GestureKeyframe *t_keyframe);
+
+    void addKeyframe(GestureKeyframe *t_keyframe, unsigned int t_position);
+
+    void removeKeyframe();
+
+    void removeKeyframe(unsigned int t_position);
+};
+} // namespace gesture_parser
 
 #endif //GESTURE_PARSER_API_GESTURE_HPP

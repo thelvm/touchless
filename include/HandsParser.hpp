@@ -6,50 +6,64 @@
 #define GESTURE_PARSER_API_HANDSPARSER_HPP
 
 #include "ParsedHands.hpp"
+#include "Gesture.hpp"
 #include "Leap.h"
 
-namespace gesture_parser {
-    class HandsParser : private Leap::Listener {
-    private:
-        Leap::Controller *m_controller;
+namespace gesture_parser
+{
+class HandsParser : private Leap::Listener
+{
+private:
+    Leap::Controller *m_controller;
 
-        void (*m_onGestureCallback)(ParsedHands *);
+    std::map<char *, Gesture> m_gestures;
 
-        void (*m_onConnectCallback)();
+    void (*m_onGestureCallback)(Gesture *);
 
-        void (*m_onDisconnectCallback)();
+    void (*m_onConnectCallback)();
 
-        void onFrame(const Leap::Controller &t_controller) override;
+    void (*m_onDisconnectCallback)();
 
-        void onConnect(const Leap::Controller &t_controller) override;
+    void onFrame(const Leap::Controller &t_controller) override;
 
-        void onDisconnect(const Leap::Controller &t_controller) override;
+    void onConnect(const Leap::Controller &t_controller) override;
 
-        ParsedHands *parseFrame(Leap::Frame t_frame);
+    void onDisconnect(const Leap::Controller &t_controller) override;
 
-    public:
-        HandsParser();
+    ParsedHands *parseFrame(Leap::Frame t_frame);
 
-        bool canParseHands();
+public:
+    HandsParser();
 
-        void startParsing();
+    bool canParseHands();
 
-        void stopParsing();
+    void startParsing();
 
-        ParsedHands *getParsedHands();
+    void stopParsing();
 
-        void setOnGestureCallback(void (*t_onGestureCallback)(ParsedHands *));
+    ParsedHands *getParsedHands();
 
-        void removeOnGestureCallback();
+    void setOnGestureCallback(void (*t_onGestureCallback)(Gesture *));
 
-        void setOnConnectCallback(void (*t_onConnectCallback)());
+    void removeOnGestureCallback();
 
-        void removeOnConnectCallback();
+    void setOnConnectCallback(void (*t_onConnectCallback)());
 
-        void setOnDisconnectCallback(void (*t_onDisconnectCallback)());
+    void removeOnConnectCallback();
 
-        void removeOnDisconnectCallback();
-    };
-}
+    void setOnDisconnectCallback(void (*t_onDisconnectCallback)());
+
+    void removeOnDisconnectCallback();
+
+    /// Adds or replaces a gesture to the list of gestures to detect
+    void addGesture(Gesture *t_gesture);
+
+    /// Removes a gesture by name from the list of gestures to detect
+    void removeGesture(char *t_gestureName);
+
+    /// Removes a gesture with same name from the list of gestures to detect
+    void removeGesture(Gesture *t_gesture);
+};
+} // namespace gesture_parser
 
 #endif //GESTURE_PARSER_API_HANDSPARSER_HPP

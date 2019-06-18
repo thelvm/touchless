@@ -8,6 +8,7 @@
 #include "ParsedHands.hpp"
 #include "Gesture.hpp"
 #include "Leap.h"
+#include "HandsParserListener.hpp"
 
 namespace gesture_parser
 {
@@ -16,11 +17,7 @@ class HandsParser : private Leap::Listener
 private:
     Leap::Controller *m_controller;
 
-    void (*m_onGestureCallback)(ParsedHands *);
-
-    void (*m_onConnectCallback)();
-
-    void (*m_onDisconnectCallback)();
+    HandsParserListener *m_listener;
 
     void onFrame(const Leap::Controller &t_controller) override;
 
@@ -33,25 +30,15 @@ private:
 public:
     HandsParser();
 
-    bool canParseHands();
+    bool canParse() const;
 
     void startParsing();
 
     void stopParsing();
 
-    ParsedHands *getParsedHands();
+    ParsedHands *getHands();
 
-    void setOnGestureCallback(void (*t_onGestureCallback)(ParsedHands *));
-
-    void removeOnGestureCallback();
-
-    void setOnConnectCallback(void (*t_onConnectCallback)());
-
-    void removeOnConnectCallback();
-
-    void setOnDisconnectCallback(void (*t_onDisconnectCallback)());
-
-    void removeOnDisconnectCallback();
+    void addListener(HandsParserListener *t_listener);
 };
 } // namespace gesture_parser
 

@@ -7,43 +7,39 @@
 gesture_parser::HandsParser::HandsParser()
 {
     m_controller = new Leap::Controller;
-
-    m_onGestureCallback = nullptr;
-    m_onConnectCallback = nullptr;
-    m_onDisconnectCallback = nullptr;
+    m_listener = nullptr;
 }
 
-bool gesture_parser::HandsParser::canParseHands()
+bool gesture_parser::HandsParser::canParse() const
 {
-    return false;
+    return m_controller->isConnected();
 }
 
 void gesture_parser::HandsParser::onFrame(const Leap::Controller &t_controller)
 {
-    if (m_onGestureCallback != nullptr)
-    { /*
+    if (m_listener != nullptr)
+    {
         ParsedHands *parsedHands = parseFrame(t_controller.frame());
         if (parsedHands != nullptr)
         {
-            m_onGestureCallback(parsedHands);
+            m_listener->onHands(parsedHands);
         }
-        */
     }
 }
 
 void gesture_parser::HandsParser::onConnect(const Leap::Controller &t_controller)
 {
-    if (m_onConnectCallback != nullptr)
+    if (m_listener != nullptr)
     {
-        m_onConnectCallback();
+        m_listener->onConnect();
     }
 }
 
 void gesture_parser::HandsParser::onDisconnect(const Leap::Controller &t_controller)
 {
-    if (m_onDisconnectCallback != nullptr)
+    if (m_listener != nullptr)
     {
-        m_onDisconnectCallback();
+        m_listener->onDisconnect();
     }
 }
 
@@ -178,37 +174,7 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
     return parsedHands;
 }
 
-void gesture_parser::HandsParser::setOnGestureCallback(void (*t_onGestureCallback)(ParsedHands *))
-{
-    m_onGestureCallback = t_onGestureCallback;
-}
-
-void gesture_parser::HandsParser::removeOnGestureCallback()
-{
-    m_onGestureCallback = nullptr;
-}
-
-void gesture_parser::HandsParser::setOnConnectCallback(void (*t_onConnectCallback)())
-{
-    m_onConnectCallback = t_onConnectCallback;
-}
-
-void gesture_parser::HandsParser::removeOnConnectCallback()
-{
-    m_onConnectCallback = nullptr;
-}
-
-void gesture_parser::HandsParser::setOnDisconnectCallback(void (*t_onDisconnectCallback)())
-{
-    m_onDisconnectCallback = t_onDisconnectCallback;
-}
-
-void gesture_parser::HandsParser::removeOnDisconnectCallback()
-{
-    m_onDisconnectCallback = nullptr;
-}
-
-gesture_parser::ParsedHands *gesture_parser::HandsParser::getParsedHands()
+gesture_parser::ParsedHands *gesture_parser::HandsParser::getHands()
 {
     return parseFrame(m_controller->frame());
 }
@@ -216,9 +182,9 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::getParsedHands()
 void gesture_parser::HandsParser::startParsing()
 {
     m_controller->addListener(*this);
-    if (m_onDisconnectCallback != nullptr)
+    if (m_listener != nullptr)
     {
-        m_onDisconnectCallback();
+        m_listener->onDisconnect();
     }
 }
 

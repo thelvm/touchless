@@ -16,9 +16,7 @@ class HandsParser : private Leap::Listener
 private:
     Leap::Controller *m_controller;
 
-    std::map<char *, Gesture> m_gestures;
-
-    void (*m_onGestureCallback)(Gesture *);
+    void (*m_onGestureCallback)(ParsedHands *);
 
     void (*m_onConnectCallback)();
 
@@ -43,7 +41,7 @@ public:
 
     ParsedHands *getParsedHands();
 
-    void setOnGestureCallback(void (*t_onGestureCallback)(Gesture *));
+    void setOnGestureCallback(void (*t_onGestureCallback)(ParsedHands *));
 
     void removeOnGestureCallback();
 
@@ -54,15 +52,6 @@ public:
     void setOnDisconnectCallback(void (*t_onDisconnectCallback)());
 
     void removeOnDisconnectCallback();
-
-    /// Adds or replaces a gesture to the list of gestures to detect
-    void addGesture(Gesture *t_gesture);
-
-    /// Removes a gesture by name from the list of gestures to detect
-    void removeGesture(char *t_gestureName);
-
-    /// Removes a gesture with same name from the list of gestures to detect
-    void removeGesture(Gesture *t_gesture);
 };
 } // namespace gesture_parser
 

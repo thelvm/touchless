@@ -178,7 +178,7 @@ gesture_parser::ParsedHands *gesture_parser::HandsParser::parseFrame(Leap::Frame
     return parsedHands;
 }
 
-void gesture_parser::HandsParser::setOnGestureCallback(void (*t_onGestureCallback)(Gesture *))
+void gesture_parser::HandsParser::setOnGestureCallback(void (*t_onGestureCallback)(ParsedHands *))
 {
     m_onGestureCallback = t_onGestureCallback;
 }
@@ -225,9 +225,4 @@ void gesture_parser::HandsParser::startParsing()
 void gesture_parser::HandsParser::stopParsing()
 {
     m_controller->removeListener(*this);
-}
-
-void gesture_parser::HandsParser::addGesture(Gesture *t_gesture)
-{
-    m_gestures.insert_or_assign(t_gesture->name, t_gesture);
 }

@@ -14,7 +14,7 @@ void onDisconnect()
     printf("Disconnected!\n");
 }
 
-void onGesture(gesture_parser::Gesture *t_gesture)
+void onHands(gesture_parser::ParsedHands *t_gesture)
 {
 }
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
     pHandsParser->setOnConnectCallback(onConnect);
     pHandsParser->setOnDisconnectCallback(onDisconnect);
-    pHandsParser->setOnGestureCallback(onGesture);
+    pHandsParser->setOnGestureCallback(onHands);
 
     pHandsParser->startParsing();
 

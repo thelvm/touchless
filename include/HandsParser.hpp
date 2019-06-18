@@ -32,13 +32,13 @@ public:
 
     bool canParse() const;
 
-    void startParsing();
+    void start();
 
-    void stopParsing();
+    void stop();
 
     Hands *getHands();
 
-    void addListener(HandsParserListener *t_listener);
+    void setListener(HandsParserListener *t_listener);
 };
 } // namespace gesture_parser
 

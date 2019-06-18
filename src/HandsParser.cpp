@@ -179,7 +179,7 @@ gesture_parser::Hands *gesture_parser::HandsParser::getHands()
     return parseFrame(m_controller->frame());
 }
 
-void gesture_parser::HandsParser::startParsing()
+void gesture_parser::HandsParser::start()
 {
     m_controller->addListener(*this);
     if (m_listener != nullptr)
@@ -188,7 +188,12 @@ void gesture_parser::HandsParser::startParsing()
     }
 }
 
-void gesture_parser::HandsParser::stopParsing()
+void gesture_parser::HandsParser::stop()
 {
     m_controller->removeListener(*this);
+}
+
+void gesture_parser::HandsParser::setListener(gesture_parser::HandsParserListener *t_listener)
+{
+    m_listener = t_listener;
 }

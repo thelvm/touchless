@@ -11,7 +11,7 @@
 namespace gesture_parser
 {
 /// Main parser class. Parses Gesture from a list directly from the Leap Motion Sensor
-class GestureParser
+class GestureParser : public HandsParserListener
 {
 private:
     /// Hands parser used in gesture detection
@@ -27,6 +27,11 @@ private:
     void parseHands(const ParsedHands *t_parsedHands);
 
 public:
+    GestureParser();
+
+    /// Adds a listener to the parser
+    void addListener(GestureParserListener *t_listener);
+
     /// Starts attempting to connect to the Leap Motion Sensor.
     /// Once it is successful, starts processing the Leap Motion Sensor input.
     void start();
@@ -38,7 +43,13 @@ public:
     void addGesture(Gesture *t_gesture);
 
     /// Removes a Gesture with corresponding name from the list of gestures to detect
-    void removeGesture(char *t_gestureName);
+    void removeGesture(const char *t_gestureName);
+
+    void onConnect() override;
+
+    void onDisconnect() override;
+
+    void onHands(const ParsedHands *t_hands) override;
 };
 } // namespace gesture_parser
 

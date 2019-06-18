@@ -8,7 +8,7 @@ namespace gesture_parser
 class GestureParserListener
 {
 public:
-    virtual void onGesture(const Gesture *&t_gesture);
+    virtual void onGesture(const Gesture *t_gesture);
 
     virtual void onConnect();
 

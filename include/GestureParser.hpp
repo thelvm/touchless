@@ -18,7 +18,7 @@ private:
     HandsParser *m_handsParser;
 
     /// The list of gestures to detect
-    std::map<char *, Gesture> m_gestures;
+    std::map<char *, Gesture *> m_gestures;
 
     GestureParserListener *m_listener;
 
@@ -30,7 +30,7 @@ public:
     GestureParser();
 
     /// Adds a listener to the parser
-    void addListener(GestureParserListener *t_listener);
+    void setListener(GestureParserListener *t_listener);
 
     /// Starts attempting to connect to the Leap Motion Sensor.
     /// Once it is successful, starts processing the Leap Motion Sensor input.
@@ -40,10 +40,10 @@ public:
     void stop();
 
     /// Adds a gesture to the list of gestures to detect
-    void addGesture(Gesture *t_gesture);
+    void addOrReplaceGesture(Gesture *t_gesture);
 
     /// Removes a Gesture with corresponding name from the list of gestures to detect
-    void removeGesture(const char *t_gestureName);
+    void removeGesture(char *t_gestureName);
 
     void onConnect() override;
 

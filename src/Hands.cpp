@@ -13,7 +13,7 @@ gesture_parser::Hands::Hands()
     rightHand = nullptr;
 }
 
-double gesture_parser::Hands::getXDistance() const
+double gesture_parser::Hands::distanceBetweenHandsX() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -22,7 +22,7 @@ double gesture_parser::Hands::getXDistance() const
     return -1;
 }
 
-double gesture_parser::Hands::getYDistance() const
+double gesture_parser::Hands::distanceBetweenHandsY() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -31,7 +31,7 @@ double gesture_parser::Hands::getYDistance() const
     return -1;
 }
 
-double gesture_parser::Hands::getZDistance() const
+double gesture_parser::Hands::distanceBetweenHandsZ() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -40,7 +40,7 @@ double gesture_parser::Hands::getZDistance() const
     return -1;
 }
 
-double gesture_parser::Hands::getDistance() const
+double gesture_parser::Hands::distanceBetweenHands() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -51,18 +51,18 @@ double gesture_parser::Hands::getDistance() const
     return -1;
 }
 
-bool gesture_parser::Hands::equals(const gesture_parser::Hands &other, double t_distanceTolerance) const
+bool gesture_parser::Hands::equals(Hands *other, double t_distanceTolerance) const
 {
     double distanceTolerance = t_distanceTolerance / 2;
-    return leftHand == other.leftHand &&
-           rightHand == other.rightHand &&
+    return leftHand == other->leftHand &&
+           rightHand == other->rightHand &&
 
-           (other.getXDistance() - distanceTolerance) < getXDistance() &&
-           getXDistance() < (other.getXDistance() + distanceTolerance) &&
+           (other->distanceBetweenHandsX() - distanceTolerance) < distanceBetweenHandsX() &&
+           (other->distanceBetweenHandsX() + distanceTolerance) > distanceBetweenHandsX() &&
 
-           (other.getYDistance() - distanceTolerance) < getYDistance() &&
-           getYDistance() < (other.getYDistance() + distanceTolerance) &&
+           (other->distanceBetweenHandsY() - distanceTolerance) < distanceBetweenHandsY() &&
+           (other->distanceBetweenHandsY() + distanceTolerance) > distanceBetweenHandsY() &&
 
-           (other.getZDistance() - distanceTolerance) < getZDistance() &&
-           getZDistance() < (other.getZDistance() + distanceTolerance);
+           (other->distanceBetweenHandsZ() - distanceTolerance) < distanceBetweenHandsZ() &&
+           (other->distanceBetweenHandsZ() + distanceTolerance) > distanceBetweenHandsZ();
 }

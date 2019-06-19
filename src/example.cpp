@@ -4,31 +4,29 @@
 
 #include "gesture_parser.hpp"
 
-void onConnect()
-{
-    printf("Connected!\n");
-}
+using namespace gesture_parser;
 
-void onDisconnect()
+class myListener : public GestureParserListener
 {
-    printf("Disconnected!\n");
-}
+    void onConnect() override
+    {
+        printf("Connected!\n");
+    }
 
-void onHands(gesture_parser::ParsedHands *t_gesture)
-{
-}
+    void onDisconnect() override
+    {
+        printf("Disconnected!\n");
+    }
+
+    void onGesture(char *t_gesture_name) override
+    {
+        printf("%s", t_gesture_name);
+    }
+};
 
 int main(int argc, char **argv)
 {
-    auto pHandsParser = new gesture_parser::HandsParser();
-
-    pHandsParser->setOnConnectCallback(onConnect);
-    pHandsParser->setOnDisconnectCallback(onDisconnect);
-    pHandsParser->setOnGestureCallback(onHands);
-
-    pHandsParser->startParsing();
-
-    std::cin.get();
-
-    pHandsParser->stopParsing();
+    auto gestureParser = new GestureParser();
+    myListener *listener = new myListener();
+    gestureParser->setListener(listener);
 }

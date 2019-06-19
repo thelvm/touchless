@@ -6,6 +6,7 @@
 #define GESTURE_PARSER_API_GESTURE_HPP
 
 #include <vector>
+#include <time.h>
 #include "GestureKeyframe.hpp"
 
 namespace gesture_parser
@@ -14,9 +15,14 @@ class Gesture
 {
 private:
     std::vector<GestureKeyframe *> m_keyframes;
+    unsigned int m_currentKeyframe;
+    clock_t m_lastKeyframeTimestamp;
 
 public:
     char *name;
+
+    /// Distance in mm treshold for two hands to be considered in the same position
+    double precision;
 
     Gesture();
 
@@ -29,6 +35,8 @@ public:
     void removeKeyframe();
 
     void removeKeyframe(unsigned int t_position);
+
+    bool test(Hands *t_hands);
 };
 } // namespace gesture_parser
 

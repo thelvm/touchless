@@ -17,15 +17,15 @@ public:
 
     Hands();
 
-    bool equals(const Hands &other, double t_distanceTolerance) const;
+    bool equals(Hands *other, double t_distanceTolerance) const;
 
-    double getXDistance() const;
+    double distanceBetweenHandsX() const;
 
-    double getYDistance() const;
+    double distanceBetweenHandsY() const;
 
-    double getZDistance() const;
+    double distanceBetweenHandsZ() const;
 
-    double getDistance() const;
+    double distanceBetweenHands() const;
 };
 } // namespace gesture_parser
 

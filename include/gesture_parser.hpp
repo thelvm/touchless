@@ -12,4 +12,9 @@
 #include "GestureParserListener.hpp"
 #include "GestureParser.hpp"
 
+namespace gesture_parser
+{
+    bool isLeapDaemonRunning();
+}
+
 #endif //GESTURE_PARSER_API_GESTURE_PARSER_HPP

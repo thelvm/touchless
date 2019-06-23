@@ -2,10 +2,10 @@
 // Created by lucas on 12/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_HAND_HPP
-#define GESTURE_PARSER_API_HAND_HPP
+#ifndef TOUCHLESS_API_HAND_HPP
+#define TOUCHLESS_API_HAND_HPP
 
-namespace gesture_parser
+namespace touchless
 {
 class Hand
 {
@@ -86,6 +86,6 @@ public:
 
     void setYawRadian(double t_radian);
 };
-} // namespace gesture_parser
+} // namespace touchless
 
-#endif //GESTURE_PARSER_API_HAND_HPP
+#endif //TOUCHLESS_API_HAND_HPP

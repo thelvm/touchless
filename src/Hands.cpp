@@ -7,13 +7,13 @@
 #include <cmath>
 #include "Hands.hpp"
 
-gesture_parser::Hands::Hands()
+touchless::Hands::Hands()
 {
     leftHand = nullptr;
     rightHand = nullptr;
 }
 
-double gesture_parser::Hands::distanceBetweenHandsX() const
+double touchless::Hands::distanceBetweenHandsX() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -22,7 +22,7 @@ double gesture_parser::Hands::distanceBetweenHandsX() const
     return -1;
 }
 
-double gesture_parser::Hands::distanceBetweenHandsY() const
+double touchless::Hands::distanceBetweenHandsY() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -31,7 +31,7 @@ double gesture_parser::Hands::distanceBetweenHandsY() const
     return -1;
 }
 
-double gesture_parser::Hands::distanceBetweenHandsZ() const
+double touchless::Hands::distanceBetweenHandsZ() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -40,7 +40,7 @@ double gesture_parser::Hands::distanceBetweenHandsZ() const
     return -1;
 }
 
-double gesture_parser::Hands::distanceBetweenHands() const
+double touchless::Hands::distanceBetweenHands() const
 {
     if (leftHand != nullptr && rightHand != nullptr)
     {
@@ -51,7 +51,7 @@ double gesture_parser::Hands::distanceBetweenHands() const
     return -1;
 }
 
-bool gesture_parser::Hands::equals(Hands *other, double t_distanceTolerance) const
+bool touchless::Hands::equals(Hands *other, double t_distanceTolerance) const
 {
     double distanceTolerance = t_distanceTolerance / 2;
     return leftHand == other->leftHand &&

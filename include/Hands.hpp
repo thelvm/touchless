@@ -2,12 +2,12 @@
 // Created by lucas on 12/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_HANDS_HPP
-#define GESTURE_PARSER_API_HANDS_HPP
+#ifndef TOUCHLESS_API_HANDS_HPP
+#define TOUCHLESS_API_HANDS_HPP
 
 #include "Hand.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 class Hands
 {
@@ -27,6 +27,6 @@ public:
 
     double distanceBetweenHands() const;
 };
-} // namespace gesture_parser
+} // namespace touchless
 
-#endif //GESTURE_PARSER_API_HandS_HPP
+#endif //TOUCHLESS_API_HandS_HPP

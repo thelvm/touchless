@@ -4,18 +4,18 @@
 
 #include "HandsParser.hpp"
 
-gesture_parser::HandsParser::HandsParser()
+touchless::HandsParser::HandsParser()
 {
     m_controller = new Leap::Controller;
     m_listener = nullptr;
 }
 
-bool gesture_parser::HandsParser::canParse() const
+bool touchless::HandsParser::canParse() const
 {
     return m_controller->isConnected();
 }
 
-void gesture_parser::HandsParser::onFrame(const Leap::Controller &t_controller)
+void touchless::HandsParser::onFrame(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
@@ -27,7 +27,7 @@ void gesture_parser::HandsParser::onFrame(const Leap::Controller &t_controller)
     }
 }
 
-void gesture_parser::HandsParser::onConnect(const Leap::Controller &t_controller)
+void touchless::HandsParser::onConnect(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
@@ -35,7 +35,7 @@ void gesture_parser::HandsParser::onConnect(const Leap::Controller &t_controller
     }
 }
 
-void gesture_parser::HandsParser::onDisconnect(const Leap::Controller &t_controller)
+void touchless::HandsParser::onDisconnect(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
@@ -43,7 +43,7 @@ void gesture_parser::HandsParser::onDisconnect(const Leap::Controller &t_control
     }
 }
 
-gesture_parser::Hands *gesture_parser::HandsParser::parseFrame(Leap::Frame t_frame)
+touchless::Hands *touchless::HandsParser::parseFrame(Leap::Frame t_frame)
 {
     Hands *hands;
 
@@ -174,12 +174,12 @@ gesture_parser::Hands *gesture_parser::HandsParser::parseFrame(Leap::Frame t_fra
     return hands;
 }
 
-gesture_parser::Hands *gesture_parser::HandsParser::getHands()
+touchless::Hands *touchless::HandsParser::getHands()
 {
     return parseFrame(m_controller->frame());
 }
 
-void gesture_parser::HandsParser::start()
+void touchless::HandsParser::start()
 {
     m_controller->addListener(*this);
     if (m_listener != nullptr)
@@ -188,12 +188,12 @@ void gesture_parser::HandsParser::start()
     }
 }
 
-void gesture_parser::HandsParser::stop()
+void touchless::HandsParser::stop()
 {
     m_controller->removeListener(*this);
 }
 
-void gesture_parser::HandsParser::setListener(gesture_parser::HandsParserListener *t_listener)
+void touchless::HandsParser::setListener(touchless::HandsParserListener *t_listener)
 {
     m_listener = t_listener;
 }

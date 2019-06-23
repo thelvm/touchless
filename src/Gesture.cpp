@@ -6,9 +6,9 @@
 #include <iostream>
 #include "Gesture.hpp"
 
-gesture_parser::Gesture::Gesture() = default;
+touchless::Gesture::Gesture() = default;
 
-gesture_parser::Gesture::Gesture(const char *t_file_name)
+touchless::Gesture::Gesture(const char *t_file_name)
 {
     std::ifstream fileStream(t_file_name);
     if (fileStream.fail())
@@ -32,7 +32,7 @@ gesture_parser::Gesture::Gesture(const char *t_file_name)
     }
 }
 
-void gesture_parser::Gesture::addKeyframe(gesture_parser::GestureKeyframe *t_keyframe, unsigned int t_position)
+void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe, unsigned int t_position)
 {
     if (t_position < m_keyframes.size())
     {
@@ -41,12 +41,12 @@ void gesture_parser::Gesture::addKeyframe(gesture_parser::GestureKeyframe *t_key
     }
 }
 
-void gesture_parser::Gesture::removeKeyframe()
+void touchless::Gesture::removeKeyframe()
 {
     m_keyframes.pop_back();
 }
 
-void gesture_parser::Gesture::removeKeyframe(unsigned int t_position)
+void touchless::Gesture::removeKeyframe(unsigned int t_position)
 {
     if (t_position < m_keyframes.size())
     {
@@ -55,7 +55,7 @@ void gesture_parser::Gesture::removeKeyframe(unsigned int t_position)
     }
 }
 
-bool gesture_parser::Gesture::test(Hands *t_hands)
+bool touchless::Gesture::test(Hands *t_hands)
 {
     clock_t timeSinceLastKeyframe = (clock() - m_lastKeyframeTimestamp) / CLOCKS_PER_SEC;
     if (m_currentKeyframe = 0 ||

@@ -2,14 +2,14 @@
 // Created by lucas on 14/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_GESTURE_HPP
-#define GESTURE_PARSER_API_GESTURE_HPP
+#ifndef TOUCHLESS_API_GESTURE_HPP
+#define TOUCHLESS_API_GESTURE_HPP
 
 #include <vector>
 #include <time.h>
 #include "GestureKeyframe.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 class Gesture
 {
@@ -38,6 +38,6 @@ public:
 
     bool test(Hands *t_hands);
 };
-} // namespace gesture_parser
+} // namespace touchless
 
-#endif //GESTURE_PARSER_API_GESTURE_HPP
+#endif //TOUCHLESS_API_GESTURE_HPP

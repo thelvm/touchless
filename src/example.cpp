@@ -2,9 +2,9 @@
 // Created by lucas on 12/06/19.
 //
 
-#include "gesture_parser.hpp"
+#include "touchless.hpp"
 
-using namespace gesture_parser;
+using namespace touchless;
 
 class myListener : public GestureParserListener
 {
@@ -26,7 +26,11 @@ class myListener : public GestureParserListener
 
 int main(int argc, char **argv)
 {
+    if (!isLeapDaemonRunning())
+    {
+        startLeapDaemon();
+    }
     auto gestureParser = new GestureParser();
-    myListener *listener = new myListener();
+    auto *listener = new myListener();
     gestureParser->setListener(listener);
 }

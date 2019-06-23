@@ -1,38 +1,38 @@
 #include "GestureParser.hpp"
 
-gesture_parser::GestureParser::GestureParser()
+touchless::GestureParser::GestureParser()
 {
     m_listener = nullptr;
     m_handsParser = new HandsParser();
     m_handsParser->setListener(this);
 }
 
-void gesture_parser::GestureParser::setListener(gesture_parser::GestureParserListener *t_listener)
+void touchless::GestureParser::setListener(touchless::GestureParserListener *t_listener)
 {
     m_listener = t_listener;
 }
 
-void gesture_parser::GestureParser::start()
+void touchless::GestureParser::start()
 {
     m_handsParser->start();
 }
 
-void gesture_parser::GestureParser::stop()
+void touchless::GestureParser::stop()
 {
     m_handsParser->stop();
 }
 
-void gesture_parser::GestureParser::addOrReplaceGesture(gesture_parser::Gesture *t_gesture)
+void touchless::GestureParser::addOrReplaceGesture(touchless::Gesture *t_gesture)
 {
     m_gestures.insert_or_assign(t_gesture->name, t_gesture);
 }
 
-void gesture_parser::GestureParser::removeGesture(char *t_gestureName)
+void touchless::GestureParser::removeGesture(char *t_gestureName)
 {
     m_gestures.erase(t_gestureName);
 }
 
-void gesture_parser::GestureParser::onConnect()
+void touchless::GestureParser::onConnect()
 {
     if (m_listener != nullptr)
     {
@@ -40,7 +40,7 @@ void gesture_parser::GestureParser::onConnect()
     }
 }
 
-void gesture_parser::GestureParser::onDisconnect()
+void touchless::GestureParser::onDisconnect()
 {
     if (m_listener != nullptr)
     {
@@ -48,11 +48,11 @@ void gesture_parser::GestureParser::onDisconnect()
     }
 }
 
-void gesture_parser::GestureParser::onHands(const gesture_parser::Hands *t_hands)
+void touchless::GestureParser::onHands(const touchless::Hands *t_hands)
 {
     parseHands(t_hands);
 }
 
-void gesture_parser::GestureParser::parseHands(const gesture_parser::Hands *t_parsedHands)
+void touchless::GestureParser::parseHands(const touchless::Hands *t_parsedHands)
 {
 }

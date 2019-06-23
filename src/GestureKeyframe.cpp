@@ -4,7 +4,7 @@
 
 #include "GestureKeyframe.hpp"
 
-gesture_parser::GestureKeyframe::GestureKeyframe()
+touchless::GestureKeyframe::GestureKeyframe()
 {
     hands = nullptr;
     minDelay = 0;
@@ -17,13 +17,13 @@ gesture_parser::GestureKeyframe::GestureKeyframe()
     rightDeltaZ = 0.0;
 }
 
-gesture_parser::GestureKeyframe::GestureKeyframe(const nlohmann::json &t_json)
+touchless::GestureKeyframe::GestureKeyframe(const nlohmann::json &t_json)
 {
     nlohmann::json leftHandJSON = t_json["left_hand"];
     nlohmann::json rightHandJSON = t_json["right_hand"];
 }
 
-bool gesture_parser::GestureKeyframe::compare(Hands *t_hands, double t_precision)
+bool touchless::GestureKeyframe::compare(Hands *t_hands, double t_precision)
 {
     return hands->equals(t_hands, t_precision);
 }

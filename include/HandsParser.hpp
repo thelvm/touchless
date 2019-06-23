@@ -2,15 +2,15 @@
 // Created by lucas on 12/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_HANDSPARSER_HPP
-#define GESTURE_PARSER_API_HANDSPARSER_HPP
+#ifndef TOUCHLESS_API_HANDSPARSER_HPP
+#define TOUCHLESS_API_HANDSPARSER_HPP
 
 #include "Hands.hpp"
 #include "Gesture.hpp"
 #include "Leap.h"
 #include "HandsParserListener.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 class HandsParser : private Leap::Listener
 {
@@ -40,6 +40,6 @@ public:
 
     void setListener(HandsParserListener *t_listener);
 };
-} // namespace gesture_parser
+} // namespace touchless
 
-#endif //GESTURE_PARSER_API_HANDSPARSER_HPP
+#endif //TOUCHLESS_API_HANDSPARSER_HPP

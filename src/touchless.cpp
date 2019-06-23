@@ -2,20 +2,20 @@
 // Created by lucas on 23/06/19.
 //
 
-#include <gesture_parser.hpp>
+#include <touchless.hpp>
 
-bool gesture_parser::isLeapDaemonRunning()
+bool touchless::isLeapDaemonRunning()
 {
     int isActiveReturnCode = system("systemctl is-active --quiet leapd");
     return isActiveReturnCode == 0;
 }
 
-void gesture_parser::startLeapDaemon()
+void touchless::startLeapDaemon()
 {
     system("sudo service leapd start");
 }
 
-void gesture_parser::stopLeapDaemon()
+void touchless::stopLeapDaemon()
 {
     system("sudo service leapd stop");
 }

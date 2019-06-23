@@ -2,14 +2,14 @@
 // Created by lucas on 12/06/19.
 //
 
-#ifndef GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
-#define GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
+#ifndef TOUCHLESS_API_GESTUREKEYFRAME_HPP
+#define TOUCHLESS_API_GESTUREKEYFRAME_HPP
 
 #include <time.h>
 #include "Hands.hpp"
 #include "json.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 class GestureKeyframe
 {
@@ -38,6 +38,6 @@ public:
 
     bool compare(Hands *t_hands, double t_precision);
 };
-} // namespace gesture_parser
+} // namespace touchless
 
-#endif //GESTURE_PARSER_API_GESTUREKEYFRAME_HPP
+#endif //TOUCHLESS_API_GESTUREKEYFRAME_HPP

@@ -1,5 +1,5 @@
-#ifndef GESTURE_PARSER_API_GESTURE_PARSER
-#define GESTURE_PARSER_API_GESTURE_PARSER
+#ifndef TOUCHLESS_API_GESTURE_PARSER
+#define TOUCHLESS_API_GESTURE_PARSER
 
 #include <map>
 #include <functional>
@@ -8,7 +8,7 @@
 #include "HandsParser.hpp"
 #include "GestureParserListener.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 /// Main parser class. Parses Gesture from a list directly from the Leap Motion Sensor
 class GestureParser : public HandsParserListener
@@ -51,6 +51,6 @@ public:
 
     void onHands(const Hands *t_hands) override;
 };
-} // namespace gesture_parser
+} // namespace touchless
 
 #endif

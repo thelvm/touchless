@@ -1,9 +1,9 @@
-#ifndef GESTURE_PARSER_API_GESTURE_PARSER_LISTENER
-#define GESTURE_PARSER_API_GESTURE_PARSER_LISTENER
+#ifndef TOUCHLESS_API_GESTURE_PARSER_LISTENER
+#define TOUCHLESS_API_GESTURE_PARSER_LISTENER
 
 #include "Gesture.hpp"
 
-namespace gesture_parser
+namespace touchless
 {
 class GestureParserListener
 {
@@ -14,6 +14,6 @@ public:
 
     virtual void onDisconnect(){};
 };
-} // namespace gesture_parser
+} // namespace touchless
 
 #endif

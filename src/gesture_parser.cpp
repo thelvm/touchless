@@ -10,3 +10,13 @@ bool gesture_parser::isLeapDaemonRunning()
     return isActiveReturnCode == 0;
 }
 
+void gesture_parser::startLeapDaemon()
+{
+    system("sudo service leapd start");
+}
+
+void gesture_parser::stopLeapDaemon()
+{
+    system("sudo service leapd stop");
+}
+

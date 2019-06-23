@@ -15,6 +15,8 @@
 namespace gesture_parser
 {
     bool isLeapDaemonRunning();
+    void startLeapDaemon();
+    void stopLeapDaemon();
 }
 
 #endif //GESTURE_PARSER_API_GESTURE_PARSER_HPP

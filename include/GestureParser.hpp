@@ -45,9 +45,9 @@ public:
     /// Removes a Gesture with corresponding name from the list of gestures to detect
     void removeGesture(char *t_gestureName);
 
-    void onConnect() override;
+    void onCanParseHands() override;
 
-    void onDisconnect() override;
+    void onCannotParseHands() override;
 
     void onHands(const Hands *t_hands) override;
 };

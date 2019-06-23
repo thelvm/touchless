@@ -10,9 +10,9 @@ class GestureParserListener
 public:
     virtual void onGesture(char *t_gesture_name){};
 
-    virtual void onConnect(){};
+    virtual void onCanParseGesture(){};
 
-    virtual void onDisconnect(){};
+    virtual void onCannotParseGesture(){};
 };
 } // namespace touchless
 

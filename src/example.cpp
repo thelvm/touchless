@@ -8,12 +8,12 @@ using namespace touchless;
 
 class myListener : public GestureParserListener
 {
-    void onConnect() override
+    void onCanParseGesture() override
     {
         printf("Connected!\n");
     }
 
-    void onDisconnect() override
+    void onCannotParseGesture() override
     {
         printf("Disconnected!\n");
     }

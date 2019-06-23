@@ -9,8 +9,8 @@ class HandsParserListener
 {
 public:
     virtual void onHands(const Hands *t_hands){};
-    virtual void onConnect(){};
-    virtual void onDisconnect(){};
+    virtual void onCanParseHands(){};
+    virtual void onCannotParseHands(){};
 };
 } // namespace touchless
 

@@ -31,7 +31,7 @@ void touchless::HandsParser::onConnect(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
-        m_listener->onConnect();
+        m_listener->onCanParseHands();
     }
 }
 
@@ -39,7 +39,7 @@ void touchless::HandsParser::onDisconnect(const Leap::Controller &t_controller)
 {
     if (m_listener != nullptr)
     {
-        m_listener->onDisconnect();
+        m_listener->onCannotParseHands();
     }
 }
 
@@ -184,7 +184,7 @@ void touchless::HandsParser::start()
     m_controller->addListener(*this);
     if (m_listener != nullptr)
     {
-        m_listener->onDisconnect();
+        m_listener->onCannotParseHands();
     }
 }
 

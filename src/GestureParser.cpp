@@ -32,19 +32,19 @@ void touchless::GestureParser::removeGesture(char *t_gestureName)
     m_gestures.erase(t_gestureName);
 }
 
-void touchless::GestureParser::onConnect()
+void touchless::GestureParser::onCanParseHands()
 {
     if (m_listener != nullptr)
     {
-        m_listener->onConnect();
+        m_listener->onCanParseGesture();
     }
 }
 
-void touchless::GestureParser::onDisconnect()
+void touchless::GestureParser::onCannotParseHands()
 {
     if (m_listener != nullptr)
     {
-        m_listener->onDisconnect();
+        m_listener->onCannotParseGesture();
     }
 }
 

@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <time.h>
+#include "json.hpp"
 #include "GestureKeyframe.hpp"
 
 namespace touchless
@@ -26,7 +27,7 @@ public:
 
     Gesture();
 
-    Gesture(const char *t_file_name);
+    explicit Gesture(const char *t_file_name);
 
     void addKeyframe(GestureKeyframe *t_keyframe);
 
@@ -37,6 +38,8 @@ public:
     void removeKeyframe(unsigned int t_position);
 
     bool test(Hands *t_hands);
+
+    nlohmann::json toJSON();
 };
 } // namespace touchless
 

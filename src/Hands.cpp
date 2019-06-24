@@ -66,3 +66,17 @@ bool touchless::Hands::equals(Hands *other, double t_distanceTolerance) const
            (other->distanceBetweenHandsZ() - distanceTolerance) < distanceBetweenHandsZ() &&
            (other->distanceBetweenHandsZ() + distanceTolerance) > distanceBetweenHandsZ();
 }
+
+nlohmann::json touchless::Hands::toJSON()
+{
+    nlohmann::json j;
+    if (leftHand != nullptr)
+    {
+        j["left"] = leftHand->toJSON();
+    }
+    if (rightHand != nullptr)
+    {
+        j["right"] = rightHand->toJSON();
+    }
+    return j;
+}

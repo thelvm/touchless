@@ -5,6 +5,7 @@
 #ifndef TOUCHLESS_API_HANDS_HPP
 #define TOUCHLESS_API_HANDS_HPP
 
+#include "json.hpp"
 #include "Hand.hpp"
 
 namespace touchless
@@ -26,6 +27,8 @@ public:
     double distanceBetweenHandsZ() const;
 
     double distanceBetweenHands() const;
+
+    nlohmann::json toJSON();
 };
 } // namespace touchless
 

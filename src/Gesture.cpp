@@ -32,6 +32,11 @@ touchless::Gesture::Gesture(const char *t_file_name)
     }
 }
 
+void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe)
+{
+    m_keyframes.push_back(t_keyframe);
+}
+
 void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe, unsigned int t_position)
 {
     if (t_position < m_keyframes.size())
@@ -102,4 +107,19 @@ bool touchless::Gesture::test(Hands *t_hands)
     }
     m_currentKeyframe = 0;
     return false;
+}
+
+nlohmann::json touchless::Gesture::toJSON()
+{
+    nlohmann::json j;
+
+    j["name"] = name;
+    j["precision"] = precision;
+    j["keyframes"] = nlohmann::json::array();
+    for(int i = 0; i < m_keyframes.size(); i++)
+    {
+        j["keyframes"][i] = m_keyframes[i]->toJSON();
+    }
+
+    return j;
 }

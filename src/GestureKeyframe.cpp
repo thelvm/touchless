@@ -27,3 +27,23 @@ bool touchless::GestureKeyframe::compare(Hands *t_hands, double t_precision)
 {
     return hands->equals(t_hands, t_precision);
 }
+
+nlohmann::json touchless::GestureKeyframe::toJSON()
+{
+    nlohmann::json j;
+
+    if (hands != nullptr)
+    {
+        j["hands"] = hands->toJSON();
+    }
+    j["minDelay"] = minDelay;
+    j["maxDelay"] = maxDelay;
+    j["leftDeltaX"] = leftDeltaX;
+    j["leftDeltaY"] = leftDeltaY;
+    j["leftDeltaZ"] = leftDeltaZ;
+    j["rightDeltaX"] = rightDeltaX;
+    j["rightDeltaY"] = rightDeltaY;
+    j["rightDeltaZ"] = rightDeltaZ;
+
+    return j;
+}

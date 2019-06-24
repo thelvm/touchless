@@ -24,10 +24,12 @@ public:
     /// Minimum delay in seconds since the previous keyframe
     unsigned int minDelay;
 
+    /// Distance the left needs to have moved
     double leftDeltaX;
     double leftDeltaY;
     double leftDeltaZ;
 
+    /// Distance the right needs to have moved
     double rightDeltaX;
     double rightDeltaY;
     double rightDeltaZ;
@@ -37,6 +39,8 @@ public:
     explicit GestureKeyframe(const nlohmann::json &t_json);
 
     bool compare(Hands *t_hands, double t_precision);
+
+    nlohmann::json toJSON();
 };
 } // namespace touchless
 

@@ -5,6 +5,8 @@
 #ifndef TOUCHLESS_API_HAND_HPP
 #define TOUCHLESS_API_HAND_HPP
 
+#include "json.hpp"
+
 namespace touchless
 {
 class Hand
@@ -85,6 +87,8 @@ public:
     void setYawDegree(double t_degree);
 
     void setYawRadian(double t_radian);
+
+    nlohmann::json toJSON();
 };
 } // namespace touchless
 

@@ -194,3 +194,17 @@ bool touchless::Hand::operator!=(const touchless::Hand &rhs) const
 {
     return !(rhs == *this);
 }
+
+nlohmann::json touchless::Hand::toJSON()
+{
+    nlohmann::json j;
+    j["thumb"] = m_thumb;
+    j["index"] = m_index;
+    j["middle"] = m_midlle;
+    j["ring"] = m_ring;
+    j["pinky"] = m_pinky;
+    j["roll"] = m_roll;
+    j["pitch"] = m_pitch;
+    j["yaw"] = m_yaw;
+    return j;
+}

@@ -6,6 +6,10 @@
 #include "touchless_gdbus_proxy.h"
 #include "DbusInterface.hpp"
 
+Glib::RefPtr<touchless::daemonProxy> touchless::DbusInterface::m_daemonProxy;
+touchless::DbusInterfaceListener *touchless::DbusInterface::m_listener;
+touchless::DbusInterfaceDaemonModeListener *touchless::DbusInterface::m_daemonModeListener;
+
 void touchless::DbusInterface::genericStart()
 {
     m_daemonProxy = touchless::daemonProxy::createForBus_sync(Gio::DBus::BUS_TYPE_SESSION,

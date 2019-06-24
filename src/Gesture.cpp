@@ -123,3 +123,12 @@ nlohmann::json touchless::Gesture::toJSON()
 
     return j;
 }
+
+touchless::GestureKeyframe *touchless::Gesture::getKeyframe(unsigned int t_position)
+{
+    if (t_position < m_keyframes.size())
+    {
+        return m_keyframes[t_position];
+    }
+    return nullptr;
+}

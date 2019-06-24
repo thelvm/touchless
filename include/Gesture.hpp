@@ -20,7 +20,7 @@ private:
     clock_t m_lastKeyframeTimestamp;
 
 public:
-    char *name;
+    const char *name;
 
     /// Distance in mm treshold for two hands to be considered in the same position
     double precision;
@@ -36,6 +36,8 @@ public:
     void removeKeyframe();
 
     void removeKeyframe(unsigned int t_position);
+
+    GestureKeyframe *getKeyframe(unsigned int t_position);
 
     bool test(Hands *t_hands);
 

@@ -18,7 +18,7 @@ private:
     HandsParser *m_handsParser;
 
     /// The list of gestures to detect
-    std::map<char *, Gesture *> m_gestures;
+    std::map<const char *, Gesture *> m_gestures;
 
     GestureParserListener *m_listener;
 

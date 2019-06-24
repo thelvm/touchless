@@ -6,31 +6,21 @@
 
 using namespace touchless;
 
-class myListener : public GestureParserListener
-{
-    void onCanParseGesture() override
-    {
-        printf("Connected!\n");
-    }
-
-    void onCannotParseGesture() override
-    {
-        printf("Disconnected!\n");
-    }
-
-    void onGesture(char *t_gesture_name) override
-    {
-        printf("%s", t_gesture_name);
-    }
-};
 
 int main(int argc, char **argv)
 {
-    if (!isLeapDaemonRunning())
-    {
-        startLeapDaemon();
-    }
-    auto gestureParser = new GestureParser();
-    auto *listener = new myListener();
-    gestureParser->setListener(listener);
+    auto gesture = new Gesture();
+    gesture->name = "test gesture";
+    gesture->precision = 10.0;
+
+    auto keyframe = new GestureKeyframe();
+    keyframe->hands = new Hands();
+    keyframe->hands->leftHand = new Hand();
+    keyframe->hands->rightHand = new Hand();
+
+    gesture->addKeyframe(keyframe);
+    gesture->addKeyframe(keyframe);
+    gesture->addKeyframe(keyframe);
+
+    std::cout << gesture->toJSON().dump(2) << std::endl;
 }

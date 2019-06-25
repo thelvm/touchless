@@ -123,9 +123,9 @@ void touchless::Gesture::fromJSON(nlohmann::json j)
     }
 }
 
-void touchless::Gesture::fromJSON(std::string t_file_name)
+void touchless::Gesture::fromFile(std::string t_JSONFileName)
 {
-    std::ifstream fileStream(t_file_name.c_str());
+    std::ifstream fileStream(t_JSONFileName.c_str());
     if (fileStream.fail())
     {
         std::cerr << "Error: " << strerror(errno);
@@ -139,6 +139,6 @@ void touchless::Gesture::fromJSON(std::string t_file_name)
     }
     else
     {
-        std::cout << t_file_name << " cannot be loaded. JSON is empty.\n";
+        std::cout << t_JSONFileName << " cannot be loaded. JSON is empty.\n";
     }
 }

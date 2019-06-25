@@ -1,4 +1,5 @@
 #include "GestureParser.hpp"
+#include <filesystem>
 
 touchless::GestureParser::GestureParser()
 {
@@ -55,4 +56,18 @@ void touchless::GestureParser::onHands(const touchless::Hands *t_hands)
 
 void touchless::GestureParser::parseHands(const touchless::Hands *t_parsedHands)
 {
+}
+
+void touchless::GestureParser::loadGesturesFromDir(std::string t_dirPath)
+{
+    m_gestures.clear();
+    for (auto & entry : std::filesystem::directory_iterator(t_dirPath))
+    {
+        if (entry.is_regular_file())
+        {
+            auto gesture = new Gesture();
+            gesture->fromFile(entry.path());
+            addOrReplaceGesture(gesture);
+        }
+    }
 }

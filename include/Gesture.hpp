@@ -45,7 +45,7 @@ public:
 
     void fromJSON(nlohmann::json j);
 
-    void fromJSON(std::string t_JSONFileName);
+    void fromFile(std::string t_JSONFileName);
 };
 } // namespace touchless
 

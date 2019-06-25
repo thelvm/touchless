@@ -50,6 +50,8 @@ public:
     void onCannotParseHands() override;
 
     void onHands(const Hands *t_hands) override;
+
+    void loadGesturesFromDir(std::string t_dirPath);
 };
 } // namespace touchless
 

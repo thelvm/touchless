@@ -8,30 +8,6 @@
 
 touchless::Gesture::Gesture() = default;
 
-touchless::Gesture::Gesture(const char *t_file_name)
-{
-    std::ifstream fileStream(t_file_name);
-    if (fileStream.fail())
-    {
-        std::cerr << "Error: " << strerror(errno);
-    }
-    nlohmann::json jsonGesture;
-    fileStream >> jsonGesture;
-
-    if (!jsonGesture.empty())
-    {
-        ;
-        for (const auto &keyframeJSON : jsonGesture["keyframes"]["keyframe"])
-        {
-            m_keyframes.push_back(new GestureKeyframe(keyframeJSON));
-        }
-    }
-    else
-    {
-        printf("%s cannot be loaded. JSON is empty.", t_file_name);
-    }
-}
-
 void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe)
 {
     m_keyframes.push_back(t_keyframe);
@@ -58,6 +34,15 @@ void touchless::Gesture::removeKeyframe(unsigned int t_position)
         auto it = m_keyframes.begin();
         m_keyframes.erase(it + t_position);
     }
+}
+
+touchless::GestureKeyframe *touchless::Gesture::getKeyframe(unsigned int t_position)
+{
+    if (t_position < m_keyframes.size())
+    {
+        return m_keyframes[t_position];
+    }
+    return nullptr;
 }
 
 bool touchless::Gesture::test(Hands *t_hands)
@@ -124,11 +109,36 @@ nlohmann::json touchless::Gesture::toJSON()
     return j;
 }
 
-touchless::GestureKeyframe *touchless::Gesture::getKeyframe(unsigned int t_position)
+void touchless::Gesture::fromJSON(nlohmann::json j)
 {
-    if (t_position < m_keyframes.size())
+    name = j["name"];
+    precision = j["precision"];
+
+    m_keyframes.clear();
+    for (auto& JSONKeyframe : j["keyframes"])
     {
-        return m_keyframes[t_position];
+        auto keyframe = new GestureKeyframe();
+        keyframe->fromJSON(JSONKeyframe);
+        m_keyframes.push_back(keyframe);
     }
-    return nullptr;
+}
+
+void touchless::Gesture::fromJSON(std::string t_file_name)
+{
+    std::ifstream fileStream(t_file_name.c_str());
+    if (fileStream.fail())
+    {
+        std::cerr << "Error: " << strerror(errno);
+    }
+    nlohmann::json jsonGesture;
+    fileStream >> jsonGesture;
+
+    if (!jsonGesture.empty())
+    {
+        fromJSON(jsonGesture);
+    }
+    else
+    {
+        std::cout << t_file_name << " cannot be loaded. JSON is empty.\n";
+    }
 }

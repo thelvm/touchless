@@ -47,3 +47,28 @@ nlohmann::json touchless::GestureKeyframe::toJSON()
 
     return j;
 }
+
+void touchless::GestureKeyframe::fromJSON(nlohmann::json j)
+{
+    if (j.find("hands") != j.end())
+    {
+        if (hands == nullptr) {
+            hands = new Hands();
+        }
+        hands->fromJSON(j["hands"]);
+    }
+    else
+    {
+        delete(hands);
+        hands = nullptr;
+    }
+
+    minDelay = j["minDelay"];
+    maxDelay = j["maxDelay"];
+    leftDeltaX = j["leftDeltaX"];
+    leftDeltaY = j["leftDeltaY"];
+    leftDeltaZ = j["leftDeltaZ"];
+    rightDeltaX = j["rightDeltaX"];
+    rightDeltaY = j["rightDeltaY"];
+    rightDeltaZ = j["rightDeltaZ"];
+}

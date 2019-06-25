@@ -80,3 +80,33 @@ nlohmann::json touchless::Hands::toJSON()
     }
     return j;
 }
+
+void touchless::Hands::fromJSON(nlohmann::json j)
+{
+    if (j.find("left") != j.end())
+    {
+        if (leftHand == nullptr)
+        {
+            leftHand = new Hand();
+        }
+        leftHand->fromJSON(j["left"]);
+    } else
+    {
+        delete(leftHand);
+        leftHand = nullptr;
+    }
+
+    if (j.find("right") != j.end())
+    {
+        if (rightHand == nullptr)
+        {
+            rightHand = new Hand();
+        }
+        rightHand->fromJSON(j["right"]);
+    }
+    else
+    {
+        delete(rightHand);
+        rightHand = nullptr;
+    }
+}

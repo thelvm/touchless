@@ -208,3 +208,15 @@ nlohmann::json touchless::Hand::toJSON()
     j["yaw"] = m_yaw;
     return j;
 }
+
+void touchless::Hand::fromJSON(nlohmann::json j)
+{
+    m_thumb = j["thumb"];
+    m_index = j["index"];
+    m_midlle = j["middle"];
+    m_ring = j["ring"];
+    m_pinky = j["pinky"];
+    m_roll = j["roll"];
+    m_pitch = j["pitch"];
+    m_yaw = j["yaw"];
+}

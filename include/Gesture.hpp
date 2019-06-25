@@ -20,14 +20,14 @@ private:
     clock_t m_lastKeyframeTimestamp;
 
 public:
-    const char *name;
+    std::string name;
 
     /// Distance in mm treshold for two hands to be considered in the same position
     double precision;
 
     Gesture();
 
-    explicit Gesture(const char *t_file_name);
+    explicit Gesture(std::string t_name);
 
     void addKeyframe(GestureKeyframe *t_keyframe);
 
@@ -42,6 +42,10 @@ public:
     bool test(Hands *t_hands);
 
     nlohmann::json toJSON();
+
+    void fromJSON(nlohmann::json j);
+
+    void fromJSON(std::string t_JSONFileName);
 };
 } // namespace touchless
 

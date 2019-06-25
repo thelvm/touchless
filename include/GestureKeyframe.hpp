@@ -41,6 +41,8 @@ public:
     bool compare(Hands *t_hands, double t_precision);
 
     nlohmann::json toJSON();
+
+    void fromJSON(nlohmann::json j);
 };
 } // namespace touchless
 

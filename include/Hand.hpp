@@ -89,6 +89,8 @@ public:
     void setYawRadian(double t_radian);
 
     nlohmann::json toJSON();
+
+    void fromJSON(nlohmann::json j);
 };
 } // namespace touchless
 

@@ -29,6 +29,8 @@ public:
     double distanceBetweenHands() const;
 
     nlohmann::json toJSON();
+
+    void fromJSON(nlohmann::json j);
 };
 } // namespace touchless
 

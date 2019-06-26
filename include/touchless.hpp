@@ -11,9 +11,6 @@
 #include "HandsParser.hpp"
 #include "GestureParserListener.hpp"
 #include "GestureParser.hpp"
-#include "DbusInterfaceListener.hpp"
-#include "DbusInterfaceDaemonModeListener.hpp"
-#include "DbusInterface.hpp"
 
 namespace touchless
 {

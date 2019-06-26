@@ -12,7 +12,7 @@ FIND_PACKAGE(PkgConfig REQUIRED)
 pkg_check_modules(PKGS REQUIRED ${PKG_MODULES})
 
 SET(GESTURE_PARSER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-SET(LEAP_SDK_DIR ~/leapSDK/2.3.1)
+SET(LEAP_SDK_DIR $ENV{HOME}/leapSDK/2.3.1)
 
 SET(GESTURE_PARSER_SOURCES
         src/touchless.cpp
@@ -22,11 +22,6 @@ SET(GESTURE_PARSER_SOURCES
         src/Hand.cpp
         src/Hands.cpp
         src/HandsParser.cpp
-        src/DbusInterface.cpp
-
-        dbus/touchless_gdbus_common.cpp
-        dbus/touchless_gdbus_proxy.cpp
-        dbus/touchless_gdbus_stub.cpp
         )
 
 INCLUDE_DIRECTORIES(

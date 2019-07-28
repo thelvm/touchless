@@ -5,40 +5,39 @@
 #ifndef TOUCHLESS_API_HANDSPARSER_HPP
 #define TOUCHLESS_API_HANDSPARSER_HPP
 
+#include <functional>
+
 #include "Hands.hpp"
 #include "Gesture.hpp"
 #include "Leap.h"
-#include "HandsParserListener.hpp"
 
-namespace touchless
-{
-class HandsParser : private Leap::Listener
-{
-private:
-    Leap::Controller *m_controller;
+namespace touchless {
+class HandsParser : private Leap::Listener {
+ private:
+  std::unique_ptr<Leap::Controller> controller_;
 
-    HandsParserListener *m_listener;
+  void onFrame(const Leap::Controller &t_controller) override;
+  void onConnect(const Leap::Controller &t_controller) override;
+  void onDisconnect(const Leap::Controller &t_controller) override;
 
-    void onFrame(const Leap::Controller &t_controller) override;
+  std::optional<touchless::Hands> ParseFrame(const Leap::Frame &frame);
 
-    void onConnect(const Leap::Controller &t_controller) override;
+  using OnHandsCallbackT = std::function<void(Hands)>;
+  using OnCanParseCallbackT = std::function<void()>;
+  using OnCannotParseCallbackT  = std::function<void()>;
+  OnHandsCallbackT on_hands_;
+  OnCanParseCallbackT on_can_parse_hands_;
+  OnCannotParseCallbackT on_cannot_parse_hands_;
 
-    void onDisconnect(const Leap::Controller &t_controller) override;
-
-    Hands *parseFrame(Leap::Frame t_frame);
-
-public:
-    HandsParser();
-
-    bool canParse() const;
-
-    void start();
-
-    void stop();
-
-    Hands *getHands();
-
-    void setListener(HandsParserListener *t_listener);
+ public:
+  HandsParser();
+  [[nodiscard]] bool CanParse() const;
+  void Start();
+  void Stop();
+  std::optional<touchless::Hands> GetHands();
+  void SetOnHands(OnHandsCallbackT on_hands);
+  void SetOnCanParseHands(OnCanParseCallbackT on_can_parse_hands);
+  void SetOnCannotParseHands(OnCannotParseCallbackT on_cannot_parse);
 };
 } // namespace touchless
 

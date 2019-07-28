@@ -32,19 +32,19 @@ double touchless::Hands::DistanceBetweenHands() const {
   return -1;
 }
 
-bool touchless::Hands::Equals(Hands *other, double distance_tolerance) const {
+bool touchless::Hands::Equals(const Hands &other, double distance_tolerance) const {
   distance_tolerance /= 2;
-  return left_hand_ == other->left_hand_ &&
-      right_hand_ == other->right_hand_ &&
+  return left_hand_ == other.left_hand_ &&
+      right_hand_ == other.right_hand_ &&
 
-      (other->DistanceBetweenHandsX() - distance_tolerance) < DistanceBetweenHandsX() &&
-      (other->DistanceBetweenHandsX() + distance_tolerance) > DistanceBetweenHandsX() &&
+      (other.DistanceBetweenHandsX() - distance_tolerance) < DistanceBetweenHandsX() &&
+      (other.DistanceBetweenHandsX() + distance_tolerance) > DistanceBetweenHandsX() &&
 
-      (other->DistanceBetweenHandsY() - distance_tolerance) < DistanceBetweenHandsY() &&
-      (other->DistanceBetweenHandsY() + distance_tolerance) > DistanceBetweenHandsY() &&
+      (other.DistanceBetweenHandsY() - distance_tolerance) < DistanceBetweenHandsY() &&
+      (other.DistanceBetweenHandsY() + distance_tolerance) > DistanceBetweenHandsY() &&
 
-      (other->DistanceBetweenHandsZ() - distance_tolerance) < DistanceBetweenHandsZ() &&
-      (other->DistanceBetweenHandsZ() + distance_tolerance) > DistanceBetweenHandsZ();
+      (other.DistanceBetweenHandsZ() - distance_tolerance) < DistanceBetweenHandsZ() &&
+      (other.DistanceBetweenHandsZ() + distance_tolerance) > DistanceBetweenHandsZ();
 }
 
 nlohmann::json touchless::Hands::ToJson() {

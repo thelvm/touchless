@@ -10,7 +10,7 @@ class Hands {
   std::optional<Hand> left_hand_;
   std::optional<Hand> right_hand_;
 
-  bool Equals(Hands *other, double distance_tolerance) const;
+  bool Equals(const Hands &other, double distance_tolerance) const;
   [[nodiscard]] double DistanceBetweenHandsX() const;
   [[nodiscard]] double DistanceBetweenHandsY() const;
   [[nodiscard]] double DistanceBetweenHandsZ() const;

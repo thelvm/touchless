@@ -4,8 +4,8 @@
 
 #include <touchless.hpp>
 
-bool touchless::isLeapDaemonRunning()
+bool touchless::IsLeapDaemonRunning()
 {
-    int isActiveReturnCode = system("systemctl is-active --quiet leapd");
-    return isActiveReturnCode == 0;
+    int is_active_return_code = system("systemctl is-active --quiet leapd");
+    return is_active_return_code == 0;
 }

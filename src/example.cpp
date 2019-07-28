@@ -2,25 +2,17 @@
 // Created by lucas on 12/06/19.
 //
 
-#include "touchless.hpp"
+#include "HandsParser.hpp"
 
 using namespace touchless;
 
 
 int main(int argc, char **argv)
 {
-    auto gesture = new Gesture();
-    gesture->name = "test gesture";
-    gesture->precision = 10.0;
+    HandsParser hands_parser;
+  hands_parser.SetOnCanParseHands([]() {
+    std::cout << "DAYUM!" << std::endl;
+  });
 
-    auto keyframe = new GestureKeyframe();
-    keyframe->hands = new Hands();
-    keyframe->hands->leftHand = new Hand();
-    keyframe->hands->rightHand = new Hand();
-
-    gesture->addKeyframe(keyframe);
-    gesture->addKeyframe(keyframe);
-    gesture->addKeyframe(keyframe);
-
-    std::cout << gesture->toJSON().dump(2) << std::endl;
+    return 0;
 }

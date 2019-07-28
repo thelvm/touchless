@@ -5,44 +5,37 @@
 #ifndef TOUCHLESS_API_GESTUREKEYFRAME_HPP
 #define TOUCHLESS_API_GESTUREKEYFRAME_HPP
 
-#include <time.h>
+#include <ctime>
 #include "Hands.hpp"
 #include "json.hpp"
 
-namespace touchless
-{
-class GestureKeyframe
-{
-public:
-    Hands *hands;
+namespace touchless {
+class GestureKeyframe {
+ public:
+  Hands hands_;
+  static double position_precision_;
 
-    static double positionPrecision;
+  /// Maximum delay in seconds since the previous keyframe
+  unsigned int max_delay_;
 
-    /// Maximum delay in seconds since the previous keyframe
-    unsigned int maxDelay;
+  /// Minimum delay in seconds since the previous keyframe
+  unsigned int min_delay_;
 
-    /// Minimum delay in seconds since the previous keyframe
-    unsigned int minDelay;
+  /// Distance the left needs to have moved
+  double left_delta_x_;
+  double left_delta_y_;
+  double left_delta_z_;
 
-    /// Distance the left needs to have moved
-    double leftDeltaX;
-    double leftDeltaY;
-    double leftDeltaZ;
+  /// Distance the right needs to have moved
+  double right_delta_x_;
+  double right_delta_y_;
+  double right_delta_z_;
 
-    /// Distance the right needs to have moved
-    double rightDeltaX;
-    double rightDeltaY;
-    double rightDeltaZ;
-
-    GestureKeyframe();
-
-    explicit GestureKeyframe(const nlohmann::json &t_json);
-
-    bool compare(Hands *t_hands, double t_precision);
-
-    nlohmann::json toJSON();
-
-    void fromJSON(nlohmann::json j);
+  GestureKeyframe();
+  explicit GestureKeyframe(const nlohmann::json &json);
+  bool Compare(const Hands &t_hands, double t_precision);
+  [[nodiscard]] nlohmann::json ToJson();
+  void FromJson(nlohmann::json j);
 };
 } // namespace touchless
 

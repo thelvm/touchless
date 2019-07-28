@@ -6,139 +6,126 @@
 #include <iostream>
 #include "Gesture.hpp"
 
-touchless::Gesture::Gesture() = default;
+touchless::Gesture::Gesture() : current_keyframe_number_{0}, precision_{0} {
+  last_keyframe_timestamp_ = clock();
+};
 
-void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe)
-{
-    m_keyframes.push_back(t_keyframe);
+void touchless::Gesture::AddKeyframe(const GestureKeyframe &t_keyframe) {
+  keyframes_.push_back(t_keyframe);
 }
 
-void touchless::Gesture::addKeyframe(touchless::GestureKeyframe *t_keyframe, unsigned int t_position)
-{
-    if (t_position < m_keyframes.size())
-    {
-        auto it = m_keyframes.begin();
-        m_keyframes.insert(it + t_position, t_keyframe);
-    }
+void touchless::Gesture::AddKeyframe(const GestureKeyframe &t_keyframe, unsigned int t_position) {
+  if (t_position < keyframes_.size()) {
+    auto it = keyframes_.begin();
+    keyframes_.insert(it + t_position, t_keyframe);
+  }
 }
 
-void touchless::Gesture::removeKeyframe()
-{
-    m_keyframes.pop_back();
+void touchless::Gesture::RemoveKeyframe() {
+  keyframes_.pop_back();
 }
 
-void touchless::Gesture::removeKeyframe(unsigned int t_position)
-{
-    if (t_position < m_keyframes.size())
-    {
-        auto it = m_keyframes.begin();
-        m_keyframes.erase(it + t_position);
-    }
+void touchless::Gesture::RemoveKeyframe(unsigned int t_position) {
+  if (t_position < keyframes_.size()) {
+    auto it = keyframes_.begin();
+    keyframes_.erase(it + t_position);
+  }
 }
 
-touchless::GestureKeyframe *touchless::Gesture::getKeyframe(unsigned int t_position)
-{
-    if (t_position < m_keyframes.size())
-    {
-        return m_keyframes[t_position];
-    }
-    return nullptr;
+std::optional<touchless::GestureKeyframe> touchless::Gesture::GetKeyframe(unsigned int t_position) {
+  if (t_position < keyframes_.size()) {
+    return keyframes_[t_position];
+  }
+  return std::nullopt;
 }
 
-bool touchless::Gesture::test(Hands *t_hands)
-{
-    clock_t timeSinceLastKeyframe = (clock() - m_lastKeyframeTimestamp) / CLOCKS_PER_SEC;
-    if (m_currentKeyframe = 0 ||
-                            (timeSinceLastKeyframe <= (m_keyframes[m_currentKeyframe]->maxDelay) &&
-                             timeSinceLastKeyframe >= (m_keyframes[m_currentKeyframe]->minDelay)))
-    {
-        if (m_keyframes[m_currentKeyframe]->compare(t_hands, precision))
-        {
-            double leftDeltaX = fabs(m_keyframes[m_currentKeyframe]->hands->leftHand->position_x - t_hands->leftHand->position_x);
-            double leftDeltaY = fabs(m_keyframes[m_currentKeyframe]->hands->leftHand->position_y - t_hands->leftHand->position_z);
-            double leftDeltaZ = fabs(m_keyframes[m_currentKeyframe]->hands->leftHand->position_z - t_hands->leftHand->position_z);
-            double rightDeltaX = fabs(m_keyframes[m_currentKeyframe]->hands->rightHand->position_x - t_hands->rightHand->position_x);
-            double rightDeltaY = fabs(m_keyframes[m_currentKeyframe]->hands->rightHand->position_y - t_hands->rightHand->position_z);
-            double rightDeltaZ = fabs(m_keyframes[m_currentKeyframe]->hands->rightHand->position_z - t_hands->rightHand->position_z);
+bool touchless::Gesture::TryHands(const Hands &t_hands) {
+  clock_t time_since_last_keyframe = (clock() - last_keyframe_timestamp_) / CLOCKS_PER_SEC;
+  if (current_keyframe_number_ != 0 ||
+      (time_since_last_keyframe <= (keyframes_[current_keyframe_number_].max_delay_) &&
+          time_since_last_keyframe >= (keyframes_[current_keyframe_number_].min_delay_))) {
+    if (keyframes_[current_keyframe_number_].Compare(t_hands, precision_)) {
+      double left_delta_x =
+          fabs(keyframes_[current_keyframe_number_].hands_.left_hand_->position_x - t_hands.left_hand_->position_x);
+      double left_delta_y =
+          fabs(keyframes_[current_keyframe_number_].hands_.left_hand_->position_y - t_hands.left_hand_->position_z);
+      double left_delta_z =
+          fabs(keyframes_[current_keyframe_number_].hands_.left_hand_->position_z - t_hands.left_hand_->position_z);
+      double right_delta_x = fabs(
+          keyframes_[current_keyframe_number_].hands_.right_hand_->position_x - t_hands.right_hand_->position_x);
+      double right_delta_y = fabs(
+          keyframes_[current_keyframe_number_].hands_.right_hand_->position_y - t_hands.right_hand_->position_z);
+      double right_delta_z = fabs(
+          keyframes_[current_keyframe_number_].hands_.right_hand_->position_z - t_hands.right_hand_->position_z);
 
-            if ((m_keyframes[m_currentKeyframe]->leftDeltaX - precision) < leftDeltaX &&
-                (m_keyframes[m_currentKeyframe]->leftDeltaX + precision) > leftDeltaX &&
+      if ((keyframes_[current_keyframe_number_].left_delta_x_ - precision_) < left_delta_x &&
+          (keyframes_[current_keyframe_number_].left_delta_x_ + precision_) > left_delta_x &&
 
-                (m_keyframes[m_currentKeyframe]->leftDeltaY - precision) < leftDeltaY &&
-                (m_keyframes[m_currentKeyframe]->leftDeltaY + precision) > leftDeltaY &&
+          (keyframes_[current_keyframe_number_].left_delta_y_ - precision_) < left_delta_y &&
+          (keyframes_[current_keyframe_number_].left_delta_y_ + precision_) > left_delta_y &&
 
-                (m_keyframes[m_currentKeyframe]->leftDeltaZ - precision) < leftDeltaZ &&
-                (m_keyframes[m_currentKeyframe]->leftDeltaZ + precision) > leftDeltaZ &&
+          (keyframes_[current_keyframe_number_].left_delta_z_ - precision_) < left_delta_z &&
+          (keyframes_[current_keyframe_number_].left_delta_z_ + precision_) > left_delta_z &&
 
-                (m_keyframes[m_currentKeyframe]->rightDeltaX - precision) < rightDeltaX &&
-                (m_keyframes[m_currentKeyframe]->rightDeltaX + precision) > rightDeltaX &&
+          (keyframes_[current_keyframe_number_].right_delta_x_ - precision_) < right_delta_x &&
+          (keyframes_[current_keyframe_number_].right_delta_x_ + precision_) > right_delta_x &&
 
-                (m_keyframes[m_currentKeyframe]->rightDeltaY - precision) < rightDeltaY &&
-                (m_keyframes[m_currentKeyframe]->rightDeltaY + precision) > rightDeltaY &&
+          (keyframes_[current_keyframe_number_].right_delta_y_ - precision_) < right_delta_y &&
+          (keyframes_[current_keyframe_number_].right_delta_y_ + precision_) > right_delta_y &&
 
-                (m_keyframes[m_currentKeyframe]->rightDeltaZ - precision) < rightDeltaZ &&
-                (m_keyframes[m_currentKeyframe]->rightDeltaZ + precision) > rightDeltaZ)
-            {
-                m_currentKeyframe++;
-                if (m_currentKeyframe == m_keyframes.size())
-                {
-                    m_currentKeyframe = 0;
-                    return true;
-                }
-                m_lastKeyframeTimestamp = clock();
-                return false;
-            }
+          (keyframes_[current_keyframe_number_].right_delta_z_ - precision_) < right_delta_z &&
+          (keyframes_[current_keyframe_number_].right_delta_z_ + precision_) > right_delta_z) {
+        current_keyframe_number_++;
+        if (current_keyframe_number_ == keyframes_.size()) {
+          current_keyframe_number_ = 0;
+          return true;
         }
+        last_keyframe_timestamp_ = clock();
+        return false;
+      }
     }
-    m_currentKeyframe = 0;
-    return false;
+  }
+  current_keyframe_number_ = 0;
+  return false;
 }
 
-nlohmann::json touchless::Gesture::toJSON()
-{
-    nlohmann::json j;
+nlohmann::json touchless::Gesture::ToJson() {
+  nlohmann::json j;
 
-    j["name"] = name;
-    j["precision"] = precision;
-    j["keyframes"] = nlohmann::json::array();
-    for(int i = 0; i < m_keyframes.size(); i++)
-    {
-        j["keyframes"][i] = m_keyframes[i]->toJSON();
-    }
+  j["name"] = name_;
+  j["precision"] = precision_;
+  j["keyframes"] = nlohmann::json::array();
+  for (size_t i = 0; i < keyframes_.size(); i++) {
+    j["keyframes"][i] = keyframes_[i].ToJson();
+  }
 
-    return j;
+  return j;
 }
 
-void touchless::Gesture::fromJSON(nlohmann::json j)
-{
-    name = j["name"];
-    precision = j["precision"];
+void touchless::Gesture::FromJson(nlohmann::json j) {
+  name_ = j["name"];
+  precision_ = j["precision"];
 
-    m_keyframes.clear();
-    for (auto& JSONKeyframe : j["keyframes"])
-    {
-        auto keyframe = new GestureKeyframe();
-        keyframe->fromJSON(JSONKeyframe);
-        m_keyframes.push_back(keyframe);
-    }
+  keyframes_.clear();
+  for (auto &json_keyframe : j["keyframes"]) {
+    GestureKeyframe keyframe;
+    keyframe.FromJson(json_keyframe);
+    keyframes_.push_back(keyframe);
+  }
 }
 
-void touchless::Gesture::fromFile(std::string t_JSONFileName)
-{
-    std::ifstream fileStream(t_JSONFileName.c_str());
-    if (fileStream.fail())
-    {
-        std::cerr << "Error: " << strerror(errno);
-    }
-    nlohmann::json jsonGesture;
-    fileStream >> jsonGesture;
+void touchless::Gesture::FromFile(const std::string &json_file_name) {
+  std::ifstream file_stream(json_file_name.c_str());
+  if (file_stream.fail()) {
+    std::cerr << "Error: " << strerror(errno);
+    return;
+  }
+  nlohmann::json json_gesture;
+  file_stream >> json_gesture;
 
-    if (!jsonGesture.empty())
-    {
-        fromJSON(jsonGesture);
-    }
-    else
-    {
-        std::cout << t_JSONFileName << " cannot be loaded. JSON is empty.\n";
-    }
+  if (!json_gesture.empty()) {
+    FromJson(json_gesture);
+  } else {
+    std::cout << json_file_name << " cannot be loaded. JSON is empty.\n";
+  }
 }

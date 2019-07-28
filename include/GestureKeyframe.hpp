@@ -33,7 +33,7 @@ class GestureKeyframe {
 
   GestureKeyframe();
   explicit GestureKeyframe(const nlohmann::json &json);
-  bool Compare(Hands *t_hands, double t_precision);
+  bool Compare(const Hands &t_hands, double t_precision);
   [[nodiscard]] nlohmann::json ToJson();
   void FromJson(nlohmann::json j);
 };

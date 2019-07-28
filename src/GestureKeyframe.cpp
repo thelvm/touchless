@@ -19,7 +19,7 @@ touchless::GestureKeyframe::GestureKeyframe(const nlohmann::json &json) {
   FromJson(json);
 }
 
-bool touchless::GestureKeyframe::Compare(Hands *t_hands, double t_precision) {
+bool touchless::GestureKeyframe::Compare(const Hands &t_hands, double t_precision) {
   return hands_.Equals(t_hands, t_precision);
 }
 

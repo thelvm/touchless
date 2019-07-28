@@ -22,7 +22,7 @@ class HandsParser : private Leap::Listener {
 
   std::optional<touchless::Hands> ParseFrame(const Leap::Frame &frame);
 
-  using OnHandsCallbackT = std::function<void(Hands)>;
+  using OnHandsCallbackT = std::function<void(const Hands &)>;
   using OnCanParseCallbackT = std::function<void()>;
   using OnCannotParseCallbackT  = std::function<void()>;
   OnHandsCallbackT on_hands_;

@@ -67,7 +67,41 @@ int touchless::gesture_manager::EditGesture(int argc, char **argv) {
 }
 
 int touchless::gesture_manager::RemoveGesture(int argc, char **argv) {
-  return 0;
+  if (argc == 2) {
+    std::cerr << "No gesture name provided" << std::endl;
+    return 1;
+  }
+  if (argc > 3) {
+    std::cerr << "Too many arguments" << std::endl;
+    return 1;
+  }
+  using namespace std::filesystem;
+  std::string home_dir = getenv("HOME");
+  auto gestures_dir = path(home_dir + "/.touchless/gestures");
+  if (!exists(gestures_dir) || is_empty(gestures_dir)) {
+    std::cout
+        << "No gestures found." << std::endl
+        << "Create a new one by typing 'gesture-manager add' or copy gesture files to " << gestures_dir << std::endl;
+    return 1;
+  }
+
+  for (auto &entry : directory_iterator(gestures_dir)) {
+    if (is_regular_file(entry)) {
+      if (entry.path().extension() == ".gesture") {
+        try {
+          touchless::Gesture gesture;
+          gesture.FromFile(entry.path());
+          if (gesture.name_ == argv[2]) {
+            remove(entry.path());
+            std::cout << "Gesture deleted" << std::endl;
+            return 0;
+          }
+        } catch (...) {}
+      }
+    }
+  }
+  std::cerr << "No gesture named " << argv[2] << std::endl;
+  return 1;
 }
 
 int touchless::gesture_manager::ListGestures() {

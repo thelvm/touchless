@@ -25,6 +25,7 @@ int touchless::gesture_manager::AddGesture(int argc, char **argv) {
   }
   touchless::HandsParser hands_parser;
   touchless::Gesture gesture;
+  std::optional<touchless::GestureKeyframe> last_keyframe = std::nullopt;
   char answer = 'y';
   while (answer == 'y') {
     std::cout << "Press enter when you're ready to add a keyframe" << std::endl;
@@ -36,6 +37,17 @@ int touchless::gesture_manager::AddGesture(int argc, char **argv) {
     hands = hands_parser.GetHands();
     touchless::GestureKeyframe keyframe;
     keyframe.hands_ = hands.value_or(touchless::Hands());
+
+    if(last_keyframe) {
+      keyframe.left_delta_x_ = fabs(hands->left_hand_->position_x - last_keyframe->hands_.left_hand_->position_x);
+      keyframe.left_delta_y_ = fabs(hands->left_hand_->position_y - last_keyframe->hands_.left_hand_->position_y);
+      keyframe.left_delta_z_ = fabs(hands->left_hand_->position_z - last_keyframe->hands_.left_hand_->position_z);
+
+      keyframe.right_delta_x_ = fabs(hands->right_hand_->position_x - last_keyframe->hands_.right_hand_->position_x);
+      keyframe.right_delta_y_ = fabs(hands->right_hand_->position_y - last_keyframe->hands_.right_hand_->position_y);
+      keyframe.right_delta_z_ = fabs(hands->right_hand_->position_z - last_keyframe->hands_.right_hand_->position_z);
+    }
+    last_keyframe = keyframe;
     gesture.AddKeyframe(keyframe);
 
     std::cout << "Add another keyframe? (y, n)" << std::endl;

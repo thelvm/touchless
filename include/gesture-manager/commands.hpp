@@ -7,6 +7,7 @@ int AddGesture(int argc, char **argv);
 int EditGesture(int argc, char **argv);
 int RemoveGesture(int argc, char **argv);
 int ListGestures();
+int TestGesture();
 }
 
 #endif //TOUCHLESS_INCLUDE_GESTURE_MANAGER_COMMANDS_HPP_

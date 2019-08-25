@@ -15,6 +15,7 @@ int touchless::gesture_manager::DisplayBasicHelp() {
   std::cout << "\tedit - edit existing gesture" << std::endl;
   std::cout << "\ttest - test existing gestures" << std::endl;
   std::cout << "\tlist - lists existing gestures" << std::endl;
+  std::cout << "\ttest - Try your gestures" << std::endl;
   return 0;
 }
 
@@ -38,7 +39,7 @@ int touchless::gesture_manager::AddGesture(int argc, char **argv) {
     touchless::GestureKeyframe keyframe;
     keyframe.hands_ = hands.value_or(touchless::Hands());
 
-    if(last_keyframe) {
+    if (last_keyframe) {
       keyframe.left_delta_x_ = fabs(hands->left_hand_->position_x - last_keyframe->hands_.left_hand_->position_x);
       keyframe.left_delta_y_ = fabs(hands->left_hand_->position_y - last_keyframe->hands_.left_hand_->position_y);
       keyframe.left_delta_z_ = fabs(hands->left_hand_->position_z - last_keyframe->hands_.left_hand_->position_z);
@@ -53,6 +54,7 @@ int touchless::gesture_manager::AddGesture(int argc, char **argv) {
     std::cout << "Add another keyframe? (y, n)" << std::endl;
     std::cin >> answer;
   }
+  gesture.precision_ = 10.0;
   std::cout << "Enter name for the gesture" << std::endl;
   std::string name;
   std::cin >> name;
@@ -140,5 +142,31 @@ int touchless::gesture_manager::ListGestures() {
       }
     }
   }
+  return 0;
+}
+
+int touchless::gesture_manager::TestGesture() {
+  if (!touchless::IsLeapDaemonRunning()) {
+    std::cerr << "Leap daemon (leapd) not running or no sensor available." << std::endl;
+    return 1;
+  }
+
+  touchless::GestureParser gesture_parser;
+  gesture_parser.SetOnGestureCallback([](const std::string &gesture_name) {
+    std::cout << "Detected gesture: " << gesture_name << std::endl;
+  });
+  using namespace std::filesystem;
+  std::string home_dir = getenv("HOME");
+  auto gestures_dir = path(home_dir + "/.touchless/gestures");
+  if (!exists(gestures_dir) || is_empty(gestures_dir)) {
+    std::cout
+        << "No gestures found." << std::endl
+        << "Create a new one by typing 'gesture-manager add' or copy gesture files to " << gestures_dir << std::endl;
+    return 1;
+  }
+  gesture_parser.LoadGesturesFromDir(gestures_dir);
+  gesture_parser.Start();
+  std::cin.ignore();
+  gesture_parser.Stop();
   return 0;
 }

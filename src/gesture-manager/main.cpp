@@ -18,7 +18,10 @@ int main(int argc, char **argv) {
     return EditGesture(argc, argv);
   } else if (command == "list") {
     return ListGestures();
-  } else {
+  } else if (command == "test") {
+    return TestGesture();
+  }
+  else {
     return DisplayBasicHelp();
   }
 }

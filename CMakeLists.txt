@@ -7,8 +7,9 @@ SET(PKG_MODULES
         giomm-2.4
         )
 
-FIND_PACKAGE(PkgConfig REQUIRED)
 FIND_PACKAGE(Threads REQUIRED)
+FIND_PACKAGE(PkgConfig REQUIRED)
+pkg_check_modules(PKGS ${PKG_MODULES} REQUIRED)
 
 if (NOT EXISTS $ENV{LEAP_SDK_DIR})
     message(SEND_ERROR "LEAP_SDK_DIR invalid or not set.")
@@ -26,10 +27,21 @@ SET(API_SOURCES
         src/api/HandsParser.cpp
         )
 
+set(DBUS_SOURCES
+        dbus/touchless_gdbus_common.cpp
+        dbus/touchless_gdbus_proxy.cpp
+        dbus/touchless_gdbus_stub.cpp
+        )
+
 set(GESTURE_MANAGER_SOURCES
         ${API_SOURCES}
         src/gesture-manager/main.cpp
         src/gesture-manager/commands.cpp)
+
+set(DAEMON_SOURCES
+        ${API_SOURCES}
+        src/daemon/main.cpp
+        )
 
 INCLUDE_DIRECTORIES(
         include/api
@@ -50,4 +62,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
 add_executable(gesture-manager ${GESTURE_MANAGER_SOURCES})
-
+add_executable(daemon ${DBUS_SOURCES} ${DAEMON_SOURCES})

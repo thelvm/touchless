@@ -58,7 +58,9 @@ void touchless::GestureParser::LoadGesturesFromDir(const std::string &dir_path) 
   for (auto &entry : std::filesystem::directory_iterator(dir_path)) {
     if (entry.is_regular_file()) {
       Gesture gesture;
-      gesture.FromFile(entry.path());
+      try {
+        gesture.FromFile(entry.path());
+      } catch (...) {}
       AddOrReplaceGesture(gesture);
     }
   }

@@ -8,7 +8,7 @@
 
 #include <utility>
 
-void touchless::daemonProxy::handle_signal(const Glib::ustring&/* sender_name */,
+void com::thelvm::touchlessProxy::handle_signal(const Glib::ustring&/* sender_name */,
     const Glib::ustring& signal_name,
     const Glib::VariantContainerBase& parameters)
 {
@@ -26,7 +26,7 @@ void touchless::daemonProxy::handle_signal(const Glib::ustring&/* sender_name */
     }
 }
 
-void touchless::daemonProxy::handle_properties_changed(
+void com::thelvm::touchlessProxy::handle_properties_changed(
     const Gio::DBus::Proxy::MapChangedProperties &changed_properties,
     const std::vector<Glib::ustring> &/* invalidated_properties */)
 {
@@ -38,14 +38,14 @@ void touchless::daemonProxy::handle_properties_changed(
 
 }
 
-touchless::daemonProxy::daemonProxy(const Glib::RefPtr<Gio::DBus::Proxy> &proxy) : m_proxy(proxy)
+com::thelvm::touchlessProxy::touchlessProxy(const Glib::RefPtr<Gio::DBus::Proxy> &proxy) : m_proxy(proxy)
 {
-    m_proxy->signal_signal().connect(sigc::mem_fun(this, &daemonProxy::handle_signal));
+    m_proxy->signal_signal().connect(sigc::mem_fun(this, &touchlessProxy::handle_signal));
     m_proxy->signal_properties_changed().
-        connect(sigc::mem_fun(this, &daemonProxy::handle_properties_changed));
+        connect(sigc::mem_fun(this, &touchlessProxy::handle_properties_changed));
 }
 
-void touchless::daemonProxy::createForBus(
+void com::thelvm::touchlessProxy::createForBus(
     Gio::DBus::BusType busType,
     Gio::DBus::ProxyFlags proxyFlags,
     const std::string &name,
@@ -56,23 +56,23 @@ void touchless::daemonProxy::createForBus(
     Gio::DBus::Proxy::create_for_bus(busType,
         name,
         objectPath,
-        "com.thelvm.touchless.daemon",
+        "com.thelvm.touchless",
         slot,
         cancellable,
         Glib::RefPtr<Gio::DBus::InterfaceInfo>(),
         proxyFlags);
 }
 
-Glib::RefPtr<touchless::daemonProxy> touchless::daemonProxy::createForBusFinish(const Glib::RefPtr<Gio::AsyncResult> &result)
+Glib::RefPtr<com::thelvm::touchlessProxy> com::thelvm::touchlessProxy::createForBusFinish(const Glib::RefPtr<Gio::AsyncResult> &result)
 {
     Glib::RefPtr<Gio::DBus::Proxy> proxy =
         Gio::DBus::Proxy::create_for_bus_finish(result);
-    touchless::daemonProxy *p =
-        new touchless::daemonProxy(proxy);
-    return Glib::RefPtr<touchless::daemonProxy>(p);
+    com::thelvm::touchlessProxy *p =
+        new com::thelvm::touchlessProxy(proxy);
+    return Glib::RefPtr<com::thelvm::touchlessProxy>(p);
 }
 
-Glib::RefPtr<touchless::daemonProxy> touchless::daemonProxy::createForBus_sync(
+Glib::RefPtr<com::thelvm::touchlessProxy> com::thelvm::touchlessProxy::createForBus_sync(
     Gio::DBus::BusType busType,
     Gio::DBus::ProxyFlags proxyFlags,
     const std::string &name,
@@ -83,11 +83,11 @@ Glib::RefPtr<touchless::daemonProxy> touchless::daemonProxy::createForBus_sync(
         Gio::DBus::Proxy::create_for_bus_sync(busType,
             name,
             objectPath,
-            "com.thelvm.touchless.daemon",
+            "com.thelvm.touchless",
             cancellable,
             Glib::RefPtr<Gio::DBus::InterfaceInfo>(),
             proxyFlags);
-    touchless::daemonProxy *p =
-        new touchless::daemonProxy(proxy);
-    return Glib::RefPtr<touchless::daemonProxy>(p);
+    com::thelvm::touchlessProxy *p =
+        new com::thelvm::touchlessProxy(proxy);
+    return Glib::RefPtr<com::thelvm::touchlessProxy>(p);
 }

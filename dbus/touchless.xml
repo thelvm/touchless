@@ -1,8 +1,8 @@
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
         "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 
-<node>
-    <interface name="com.thelvm.touchless.daemon">
+<node name="/com/thelvm/touchless">
+    <interface name="com.thelvm.touchless">
         <signal name="gesture_detected">
             <arg type="s" direction="out" name="gesture"/>
         </signal>

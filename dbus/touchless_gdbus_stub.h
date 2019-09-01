@@ -5,17 +5,18 @@
 #include <giomm.h>
 #include "touchless_gdbus_common.h"
 
-namespace touchless {
+namespace com {
+namespace thelvm {
 
-class daemonStub : public sigc::trackable {
+class touchlessStub : public sigc::trackable {
 public:
-    daemonStub();
-    virtual ~daemonStub();
+    touchlessStub();
+    virtual ~touchlessStub();
 
-    daemonStub(const daemonStub &other) = delete;
-    daemonStub(daemonStub &&other) = delete;
-    daemonStub &operator=(const daemonStub &other) = delete;
-    daemonStub &operator=(daemonStub &&other) = delete;
+    touchlessStub(const touchlessStub &other) = delete;
+    touchlessStub(touchlessStub &&other) = delete;
+    touchlessStub &operator=(const touchlessStub &other) = delete;
+    touchlessStub &operator=(touchlessStub &&other) = delete;
 
     guint register_object(const Glib::RefPtr<Gio::DBus::Connection> &connection,
                           const Glib::ustring &object_path);
@@ -65,7 +66,7 @@ private:
     std::string m_interfaceName;
 };
 
-class daemonStub::MethodInvocation {
+class touchlessStub::MethodInvocation {
 public:
     MethodInvocation(const Glib::RefPtr<Gio::DBus::MethodInvocation> &msg):
         m_message(msg) {}
@@ -86,5 +87,6 @@ private:
     Glib::RefPtr<Gio::DBus::MethodInvocation> m_message;
 };
 
-} // touchless
+} // thelvm
+} // com
 

@@ -7,14 +7,12 @@
 
 #include "Hand.hpp"
 #include "Hands.hpp"
-#include "HandsParserListener.hpp"
 #include "HandsParser.hpp"
-#include "GestureParserListener.hpp"
 #include "GestureParser.hpp"
 
 namespace touchless
 {
-    bool isLeapDaemonRunning();
+    bool IsLeapDaemonRunning();
 }
 
 #endif //TOUCHLESS_API_GESTURE_PARSER_HPP

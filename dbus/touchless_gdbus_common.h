@@ -4,9 +4,10 @@
 #include "glibmm.h"
 #include "giomm.h"
 
-namespace touchless {
+namespace com {
+namespace thelvm {
 
-class daemonTypeWrap {
+class touchlessTypeWrap {
 public:
     template<typename T>
     static void unwrapList(std::vector<T> &list, const Glib::VariantContainerBase &wrapped) {
@@ -36,6 +37,7 @@ public:
     }
 };
 
-} // touchless
+} // thelvm
+} // com
 
 

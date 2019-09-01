@@ -6,9 +6,10 @@
 #include <giomm.h>
 #include "touchless_gdbus_common.h"
 
-namespace touchless {
+namespace com {
+namespace thelvm {
 
-class daemonProxy : public Glib::ObjectBase {
+class touchlessProxy : public Glib::ObjectBase {
 public:
     static void createForBus(Gio::DBus::BusType busType,
                              Gio::DBus::ProxyFlags proxyFlags,
@@ -17,9 +18,9 @@ public:
                              const Gio::SlotAsyncReady &slot,
                              const Glib::RefPtr<Gio::Cancellable> &cancellable = {});
 
-    static Glib::RefPtr<daemonProxy> createForBusFinish (const Glib::RefPtr<Gio::AsyncResult> &result);
+    static Glib::RefPtr<touchlessProxy> createForBusFinish (const Glib::RefPtr<Gio::AsyncResult> &result);
 
-    static Glib::RefPtr<daemonProxy> createForBus_sync(
+    static Glib::RefPtr<touchlessProxy> createForBus_sync(
         Gio::DBus::BusType busType,
         Gio::DBus::ProxyFlags proxyFlags,
         const std::string &name,
@@ -37,7 +38,7 @@ protected:
     Glib::RefPtr<Gio::DBus::Proxy> m_proxy;
 
 private:
-    daemonProxy(const Glib::RefPtr<Gio::DBus::Proxy> &proxy);
+    touchlessProxy(const Glib::RefPtr<Gio::DBus::Proxy> &proxy);
 
     void handle_signal(const Glib::ustring &sender_name,
                        const Glib::ustring &signal_name,
@@ -48,5 +49,6 @@ private:
 
 };
 
-}// touchless
+}// thelvm
+}// com
 

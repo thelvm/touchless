@@ -1,8 +1,8 @@
 static const char interfaceXml0[] = R"XML_DELIMITER(<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
         "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 
-<node>
-    <interface name="com.thelvm.touchless.daemon">
+<node name="/com/thelvm/touchless">
+    <interface name="com.thelvm.touchless">
         <signal name="gesture_detected">
             <arg type="s" direction="out" name="gesture"/>
         </signal>
@@ -12,18 +12,18 @@ static const char interfaceXml0[] = R"XML_DELIMITER(<!DOCTYPE node PUBLIC "-//fr
 
 #include "touchless_gdbus_stub.h"
 
-touchless::daemonStub::daemonStub():
-    m_interfaceName("com.thelvm.touchless.daemon")
+com::thelvm::touchlessStub::touchlessStub():
+    m_interfaceName("com.thelvm.touchless")
 {
-    gesture_detected_signal.connect(sigc::mem_fun(this, &daemonStub::gesture_detected_emitter));
+    gesture_detected_signal.connect(sigc::mem_fun(this, &touchlessStub::gesture_detected_emitter));
 }
 
-touchless::daemonStub::~daemonStub()
+com::thelvm::touchlessStub::~touchlessStub()
 {
     unregister_object();
 }
 
-guint touchless::daemonStub::register_object(
+guint com::thelvm::touchlessStub::register_object(
     const Glib::RefPtr<Gio::DBus::Connection> &connection,
     const Glib::ustring &object_path)
 {
@@ -40,13 +40,13 @@ guint touchless::daemonStub::register_object(
     }
     Gio::DBus::InterfaceVTable *interface_vtable =
         new Gio::DBus::InterfaceVTable(
-            sigc::mem_fun(this, &daemonStub::on_method_call),
-            sigc::mem_fun(this, &daemonStub::on_interface_get_property),
-            sigc::mem_fun(this, &daemonStub::on_interface_set_property));
+            sigc::mem_fun(this, &touchlessStub::on_method_call),
+            sigc::mem_fun(this, &touchlessStub::on_interface_get_property),
+            sigc::mem_fun(this, &touchlessStub::on_interface_set_property));
 
     try {
         m_registeredObjectId = connection->register_object(object_path,
-            introspection_data->lookup_interface("com.thelvm.touchless.daemon"),
+            introspection_data->lookup_interface("com.thelvm.touchless"),
             *interface_vtable);
         m_connection = connection;
         m_objectPath = object_path;
@@ -57,7 +57,7 @@ guint touchless::daemonStub::register_object(
     return m_registeredObjectId;
 }
 
-void touchless::daemonStub::unregister_object()
+void com::thelvm::touchlessStub::unregister_object()
 {
     if (m_registeredObjectId == 0)
         return;
@@ -68,7 +68,7 @@ void touchless::daemonStub::unregister_object()
     m_objectPath.clear();
 }
 
-void touchless::daemonStub::on_method_call(
+void com::thelvm::touchlessStub::on_method_call(
     const Glib::RefPtr<Gio::DBus::Connection> &/* connection */,
     const Glib::ustring &/* sender */,
     const Glib::ustring &/* object_path */,
@@ -83,7 +83,7 @@ void touchless::daemonStub::on_method_call(
 
 }
 
-void touchless::daemonStub::on_interface_get_property(
+void com::thelvm::touchlessStub::on_interface_get_property(
     Glib::VariantBase &property,
     const Glib::RefPtr<Gio::DBus::Connection> &/* connection */,
     const Glib::ustring &/* sender */,
@@ -96,7 +96,7 @@ void touchless::daemonStub::on_interface_get_property(
 
 }
 
-bool touchless::daemonStub::on_interface_set_property(
+bool com::thelvm::touchlessStub::on_interface_set_property(
     const Glib::RefPtr<Gio::DBus::Connection> &/* connection */,
     const Glib::ustring &/* sender */,
     const Glib::ustring &/* object_path */,
@@ -110,7 +110,7 @@ bool touchless::daemonStub::on_interface_set_property(
     return true;
 }
 
-void touchless::daemonStub::gesture_detected_emitter(Glib::ustring gesture)
+void com::thelvm::touchlessStub::gesture_detected_emitter(Glib::ustring gesture)
 {
     std::vector<Glib::VariantBase> paramsList;
 
@@ -118,14 +118,14 @@ void touchless::daemonStub::gesture_detected_emitter(Glib::ustring gesture)
 
     m_connection->emit_signal(
         m_objectPath,
-        "com.thelvm.touchless.daemon",
+        "com.thelvm.touchless",
         "gesture_detected",
         Glib::ustring(),
         Glib::Variant<std::vector<Glib::VariantBase>>::create_tuple(paramsList));
 }
 
 
-bool touchless::daemonStub::emitSignal(
+bool com::thelvm::touchlessStub::emitSignal(
     const std::string &propName,
     Glib::VariantBase &value)
 {
